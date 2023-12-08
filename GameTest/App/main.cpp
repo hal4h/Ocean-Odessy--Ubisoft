@@ -21,6 +21,8 @@ int WINDOW_WIDTH = APP_INIT_WINDOW_WIDTH;
 int WINDOW_HEIGHT = APP_INIT_WINDOW_HEIGHT;
 HWND MAIN_WINDOW_HANDLE = nullptr;
 
+//CSimpleSprite* background;
+
 //---------------------------------------------------------------------------------
 static const double UPDATE_MAX = ((1.0 / APP_MAX_FRAME_RATE)*1000.0);
 //---------------------------------------------------------------------------------
@@ -95,7 +97,12 @@ void InitGL()
 	StartCounter();
 	gLastTime = GetCounter();
 	// Set "clearing" or background color
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black and opaque
+	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black and opaque
+	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black and opaque
+	glClearColor(0.678f, 0.847f, 0.902f, 1.0f); // Light blue and opaque
+
+
+
 }
 
 //---------------------------------------------------------------------------------

@@ -46,9 +46,19 @@ void CSimpleSprite::Update(float dt)
         m_animTime += dt/1000.0f;
         sAnimation &anim = m_animations[m_currentAnim];
         float duration = anim.m_speed * anim.m_frames.size();
+
+        //Looping around if reached the end of animation
         if (m_animTime > duration)
         {
-            m_animTime = m_animTime - duration;
+            //If we've gone farther than twice the duration, we have to remove as many full durations as possible
+            if (m_animTime >= 2 * duration)
+            {
+                m_animTime = m_animTime - duration * floorf(m_animTime / duration);
+            }
+            else //Otherwise, we can just do a simple loop around
+            {
+                m_animTime = m_animTime - duration;
+            }
         }
         int frame = (int)( m_animTime / anim.m_speed );
         SetFrame(anim.m_frames[frame]);        

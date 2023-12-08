@@ -31,6 +31,8 @@ public:
     float GetScale()  const { return m_scale;  }
     unsigned int GetFrame()  const { return m_frame; }
 	void SetColor(float r, float g, float b) { m_red = r; m_green = g; m_blue = b; }
+
+    // Note: speed must be > 0, frames must have size >= 1, id must be unique among animations
     void CreateAnimation( unsigned int id, float speed, const std::vector<int> &frames)
     {
         sAnimation anim;        

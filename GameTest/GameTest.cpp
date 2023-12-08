@@ -7,12 +7,19 @@
 #include <math.h>  
 //------------------------------------------------------------------------
 #include "app\app.h"
+//#include <algorithm>
+
 //------------------------------------------------------------------------
 
 //------------------------------------------------------------------------
 // Eample data....
 //------------------------------------------------------------------------
 CSimpleSprite *testSprite;
+CSimpleSprite* cow;
+CSimpleSprite* background;
+CSimpleSprite* chest;
+int WINDOW_WIDT = APP_INIT_WINDOW_WIDTH;
+int WINDOW_HEIGH = APP_INIT_WINDOW_HEIGHT;
 enum
 {
 	ANIM_FORWARDS,
@@ -29,14 +36,47 @@ void Init()
 {
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	testSprite = App::CreateSprite(".\\TestData\\Test.bmp", 8, 4);
+	background = App::CreateSprite(".\\TestData\\output-onlinegiftools.png", 48, 1);
+
+	float centerX = WINDOW_WIDT / 2.0f;
+	float centerY = WINDOW_HEIGH / 2.0f;
+
+	background->SetPosition(centerX, centerY);
+	// Set scale to cover the entire screen
+	float scaleX = WINDOW_WIDT / background->GetWidth();
+	float scaleY = WINDOW_HEIGH / background->GetHeight();
+	//float scale = std::min(WINDOW_WIDTH / background->GetWidth(), WINDOW_HEIGHT / background->GetHeight());
+
+	background->SetScale(scaleX);
+
+
+	testSprite = App::CreateSprite(".\\TestData\\Diver2.png", 4, 4);
+	cow = App::CreateSprite(".\\TestData\\cow.png", 3, 2);
+	cow->SetPosition(600.0f, 400.0f);
+	//background->SetPosition(500.f, 500.0f);
+
+
+
+	chest = App::CreateSprite(".\\TestData\\output-chest.png", 5, 2);
+
 	testSprite->SetPosition(400.0f, 400.0f);
+	chest->SetPosition(500.0f, 100.f);
+
 	float speed = 1.0f / 15.0f;
-	testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4,5,6,7 });
-	testSprite->CreateAnimation(ANIM_LEFT, speed, { 8,9,10,11,12,13,14,15 });
-	testSprite->CreateAnimation(ANIM_RIGHT, speed, { 16,17,18,19,20,21,22,23 });
-	testSprite->CreateAnimation(ANIM_FORWARDS, speed, { 24,25,26,27,28,29,30,31 });
-	testSprite->SetScale(1.0f);
+	testSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0,1,2,3,4});
+	testSprite->CreateAnimation(ANIM_LEFT, speed, { 5,6,7,8 });
+	testSprite->CreateAnimation(ANIM_RIGHT, speed, { 9,10,11,12 });
+	testSprite->CreateAnimation(ANIM_FORWARDS, speed, { 13,14,15,16 });
+
+	chest->CreateAnimation(0, speed, { 1,2,3,4,5,6,7,8 });
+
+	background->CreateAnimation(0, speed, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47 });
+	testSprite->SetScale(2.0f);
+	cow->SetScale(2.0f);
+	//ckground->SetScale(30.0f);
+
+	App::PlaySound(".\\TestData\\mletoff.wav");
+
 	//------------------------------------------------------------------------
 }
 
@@ -49,6 +89,9 @@ void Update(float deltaTime)
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
 	testSprite->Update(deltaTime);
+	background->Update(deltaTime);  // Add this line to update the background animation
+	chest->Update(deltaTime);
+
 	if (App::GetController().GetLeftThumbStickX() > 0.5f)
 	{
 		testSprite->SetAnimation(ANIM_RIGHT);
@@ -104,10 +147,13 @@ void Update(float deltaTime)
 	//------------------------------------------------------------------------
 	// Sample Sound.
 	//------------------------------------------------------------------------
-	if (App::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
-	{
-		App::PlaySound(".\\TestData\\Test.wav");
-	}
+	//ifApp::GetController().CheckButton(XINPUT_GAMEPAD_B, true))
+	//
+	//pp::PlaySound(".\\TestData\\mletoff.wav");
+	//
+
+	App::PlaySound(".\\TestData\\mletoff.wav");
+
 }
 
 //------------------------------------------------------------------------
@@ -118,13 +164,16 @@ void Render()
 {	
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
+	background->Draw();
+	chest->Draw();
 	testSprite->Draw();
+	//cow->Draw();
 	//------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------
 	// Example Text.
 	//------------------------------------------------------------------------
-	App::Print(100, 100, "Sample Text");
+	//App::Print(100, 100, "Sample Text");
 
 	//------------------------------------------------------------------------
 	// Example Line Drawing.
@@ -143,7 +192,7 @@ void Render()
 		float ey = 700 - cosf(a + i * 0.1f)*60.0f;
 		g = (float)i / 20.0f;
 		b = (float)i / 20.0f;
-		App::DrawLine(sx, sy, ex, ey,r,g,b);
+		//App::DrawLine(sx, sy, ex, ey,r,g,b);
 	}
 }
 //------------------------------------------------------------------------
@@ -154,6 +203,9 @@ void Shutdown()
 {	
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
+	//delete cow;
 	delete testSprite;
+	delete chest;
+	delete background;
 	//------------------------------------------------------------------------
 }

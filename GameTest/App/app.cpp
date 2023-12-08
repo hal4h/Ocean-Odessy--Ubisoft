@@ -58,6 +58,7 @@ namespace App
 		DWORD flags = (looping) ? DSBPLAY_LOOPING : 0;
 		CSimpleSound::GetInstance().PlaySound(fileName, flags);
 	}
+
 	void StopSound(const char *fileName)
 	{
 		CSimpleSound::GetInstance().StopSound(fileName);
