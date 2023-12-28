@@ -181,10 +181,8 @@ void Render()
 	//chest->Draw();
 	diver->Draw();
 
+	App::Print(10, 10, "Depth: %.2f meters", diver->GetDepth()); // Adjust position and format as needed
 
-	float x, y;
-	diver->GetPosition(x, y);
-	App::Print(10, 10, "Depth: %.2f", y); // Adjust position and format as needed
 
 	//cow->Draw();
 	//------------------------------------------------------------------------

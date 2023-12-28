@@ -2,7 +2,7 @@ UPDATES + TODO:
 
 
 December 27 Updates:
-
+-------------------------------
 -> Cleaned up GameTest.cpp
 	~ removed old test code 
 
@@ -11,8 +11,19 @@ December 27 Updates:
 	~ added health option, diver starts at 3 health
 	~ diver starts at top of screen
 	~ print depth of diver on screen
+
+
 TODO:
  ~ add display with how many lives left
  ~ add background class with tilemaps(?) 
  ~ add chest class for end game condition
  ~ add enemies throughout map 
+ ~ add collisions with side of screen
+
+
+ 
+December 28 Updates:
+-------------------------------
+-> trouble with displaying depth on screen
+-> created Map.cpp and Map.h
+->

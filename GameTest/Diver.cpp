@@ -4,13 +4,6 @@
 #include "Diver.h"
 
 
-enum
-{
-    ANIM_FORWARDS,
-    ANIM_BACKWARDS,
-    ANIM_LEFT,
-    ANIM_RIGHT,
-};
 
 #include "Diver.h"
 
@@ -20,6 +13,7 @@ Diver::Diver() {
     diverY = 400.0f;
     health = 3;
     speed = 1.0f/15.0f; // Set the default speed value (adjust as needed)
+    depth = 0.0f;
 
     // Set the initial position to the top of the page
     diverSprite->SetPosition(diverX, diverY);
@@ -40,6 +34,13 @@ Diver::~Diver() {
 
 void Diver::Update(float deltaTime) {
     diverSprite->Update(deltaTime);
+
+    if (App::GetController().GetLeftThumbStickY() > 0.5f) {
+        depth += 1.0f * deltaTime; // Increase depth when diving down
+    }
+    else if (App::GetController().GetLeftThumbStickY() < -0.5f && depth > 0.0f) {
+        depth -= 1.0f * deltaTime; // Decrease depth when going up, but prevent going below 0
+    }
     // Add any specific update logic for the diver here if needed
 
     // Handle player input for movement and animation
@@ -138,4 +139,14 @@ void Diver::SetSpeed(float newSpeed) {
 
 float Diver::GetSpeed() const {
     return speed;
+}
+
+
+
+void Diver::SetDepth(float d) {
+    depth = d;
+}
+
+float Diver::GetDepth() const {
+    return depth;
 }
