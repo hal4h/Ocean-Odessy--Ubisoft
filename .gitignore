@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Google Slides.lnk
+/Google Docs.lnk
+/Google Sheets.lnk
