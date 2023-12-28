@@ -33,6 +33,7 @@ namespace App
 	// void Print(float x, float y, const char *text, float r = 1.0f, float g = 1.0f, float b = 1.0f, void *font = GLUT_BITMAP_HELVETICA_18);
 	//-------------------------------------------------------------------------------------------
 	// Print text to screen at x,y coordinates using color r = red, g = green, b=blue using the passed GLUT font. 
+	// Print text to screen at x,y coordinates using color r = red, g = green, b=blue using the passed GLUT font. 
 	// Color values are in the range 0.0f to 1.0f.
 	// Available fonts...
 	// GLUT_BITMAP_9_BY_15, GLUT_BITMAP_8_BY_13, GLUT_BITMAP_TIMES_ROMAN_10, GLUT_BITMAP_TIMES_ROMAN_24
