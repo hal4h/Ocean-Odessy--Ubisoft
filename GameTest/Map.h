@@ -19,6 +19,10 @@ public:
     void Update(float deltaTime);
     void Draw();
 
+    void ScrollUp(float deltatime);
+    void ScrollDown(float deltaTime);
+
+
 private:
     CSimpleSprite* waterSprite;
    // float backgroundScale;
@@ -26,7 +30,11 @@ private:
     // Matrix to represent the tilemap
     std::vector<std::vector<TileType>> tilemap;
 
-    // Define additional properties as needed
+    // Vertical scroll speed (adjust as needed)
+    float scrollSpeed;
+
+    // Y position of the map
+    float mapYPosition;
 };
 
 #endif // MAP_H

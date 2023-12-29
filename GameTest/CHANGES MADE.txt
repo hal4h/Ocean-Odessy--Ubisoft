@@ -31,3 +31,11 @@ December 28 Updates:
 
 TODO: add layers with obstacles and chest 
 	   create txt files with default tilemap, end goal and levels 
+
+
+Devember 29 Updates:
+----------------------------
+-> implemented a functioning scrolling feature for up and down
+
+TODO: implement a camera that follows the player and ensures that player is steady in the middle of the page
+		find the right speed to set scroller to

@@ -39,7 +39,7 @@ Map::Map(int windowWidth, int windowHeight) {
     // initialize it as a 2D matrix with all tiles set to WATER
 
     //TODO: change values to work with screen dimentions
-    int numRows = 90; // Adjust as needed
+    int numRows = 80; // Adjust as needed
     int numColumns = 40; // Adjust as needed
     tilemap.resize(numRows, std::vector<TileType>(numColumns, WATER));
 
@@ -50,7 +50,9 @@ Map::Map(int windowWidth, int windowHeight) {
     float animationSpeed = 1.0f/7.0f; // Adjust as needed
     waterSprite->CreateAnimation(ANIMATION_ID_WATER, animationSpeed, { 0, 1, 2, 3, 4, 5, 6, 7 });
 
-    // Set other properties or load additional tilesets as needed
+    scrollSpeed = 1.0f/7.0f; // Adjust as needed
+    mapYPosition = 0.0f; // Initial Y position of the map
+
 }
 
 
@@ -63,6 +65,15 @@ void Map::Update(float deltaTime) {
     // Update any animation or logic based on deltaTime
     waterSprite->Update(deltaTime);
 
+
+    if (App::GetController().GetLeftThumbStickY() > 0.5f) {
+        ScrollDown(deltaTime);
+
+    }
+    else if (App::GetController().GetLeftThumbStickY() < -0.5f) {
+        ScrollUp(deltaTime);
+
+    }
     // Additional update logic as needed
 }
 
@@ -72,7 +83,7 @@ void Map::Draw() {
         for (int j = 0; j < tilemap[i].size(); ++j) {
             // Determine the position for each tile based on its row and column
             float tileX = j * waterSprite->GetWidth();
-            float tileY = i * waterSprite->GetHeight();
+            float tileY = i * waterSprite->GetHeight() + mapYPosition;
 
             // Set the animation frame for the water sprite
             waterSprite->SetAnimation(ANIMATION_ID_WATER);
@@ -83,4 +94,13 @@ void Map::Draw() {
         }
     }
 
+}
+
+
+void Map::ScrollUp(float deltatime) {
+    mapYPosition += scrollSpeed * deltatime;
+}
+
+void Map::ScrollDown(float deltatime) {
+    mapYPosition -= scrollSpeed * deltatime;
 }
