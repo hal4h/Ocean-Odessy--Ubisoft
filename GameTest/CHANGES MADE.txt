@@ -24,6 +24,10 @@ TODO:
  
 December 28 Updates:
 -------------------------------
--> trouble with displaying depth on screen
+-> trouble with displaying depth on screen, 
 -> created Map.cpp and Map.h
-->
+-> change movement to move map, not diver, then add camera to follow diver
+-> created the first layer for tilemap, all water
+
+TODO: add layers with obstacles and chest 
+	   create txt files with default tilemap, end goal and levels 

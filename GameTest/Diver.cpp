@@ -3,10 +3,6 @@
 
 #include "Diver.h"
 
-
-
-#include "Diver.h"
-
 Diver::Diver() {
     diverSprite = new CSimpleSprite(".\\TestData\\main_diver.png", 4, 4);
     diverX = 400.0f;
@@ -41,7 +37,6 @@ void Diver::Update(float deltaTime) {
     else if (App::GetController().GetLeftThumbStickY() < -0.5f && depth > 0.0f) {
         depth -= 1.0f * deltaTime; // Decrease depth when going up, but prevent going below 0
     }
-    // Add any specific update logic for the diver here if needed
 
     // Handle player input for movement and animation
     HandleInput(deltaTime);
@@ -49,7 +44,7 @@ void Diver::Update(float deltaTime) {
 
 void Diver::Draw() {
     diverSprite->Draw();
-    // You can add health display logic here if needed
+    // TODO: add health display logic here if needed
 }
 
 void Diver::SetPosition(float x, float y) {
@@ -85,8 +80,8 @@ int Diver::GetHealth() const {
 
 void Diver::TakeDamage(int damage) {
     health -= damage;
-    // Add logic here for what happens when the player takes damage
-    // For example, you can check if the player's health reaches zero and handle it accordingly
+    // TODO: Add logic here for what happens when the player takes damage
+    // check if the player's health reaches zero and handle it accordingly
 }
 
 void Diver::CreateAnimations(float speed) {
@@ -95,7 +90,6 @@ void Diver::CreateAnimations(float speed) {
     diverSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 5, 6, 7, 8 });
     diverSprite->CreateAnimation(ANIM_LEFT, speed, { 9, 10, 11, 12 });
     diverSprite->CreateAnimation(ANIM_RIGHT, speed, { 13, 14, 15, 16 });
-    // Add more animations as needed
 }
 
 void Diver::HandleInput(float deltaTime) {
@@ -103,7 +97,7 @@ void Diver::HandleInput(float deltaTime) {
         diverSprite->SetAnimation(ANIM_RIGHT);
         float x, y;
         diverSprite->GetPosition(x, y);
-       // x += speed * deltaTime; // Adjust for deltaTime
+        // x += speed * deltaTime; // Adjust for deltaTime
         x += 1.0f;
         diverSprite->SetPosition(x, y);
     }
@@ -111,7 +105,7 @@ void Diver::HandleInput(float deltaTime) {
         diverSprite->SetAnimation(ANIM_LEFT);
         float x, y;
         diverSprite->GetPosition(x, y);
-       // x -= speed * deltaTime; // Adjust for deltaTime
+        // x -= speed * deltaTime; // Adjust for deltaTime
         x -= 1.0f;
         diverSprite->SetPosition(x, y);
     }
@@ -122,16 +116,22 @@ void Diver::HandleInput(float deltaTime) {
         //y += speed * deltaTime; // Adjust for deltaTime
         y += 1.0f;
         diverSprite->SetPosition(x, y);
+        //depth++;
     }
     else if (App::GetController().GetLeftThumbStickY() < -0.5f) {
         diverSprite->SetAnimation(ANIM_BACKWARDS);
         float x, y;
         diverSprite->GetPosition(x, y);
-       // y -= speed * deltaTime; // Adjust for deltaTime
+        // y -= speed * deltaTime; // Adjust for deltaTime
         y -= 1.0f;
         diverSprite->SetPosition(x, y);
+        //depth--;
+
     }
+
 }
+  
+
 
 void Diver::SetSpeed(float newSpeed) {
     speed = newSpeed;

@@ -9,7 +9,7 @@
 #include "app\app.h"
 //#include <algorithm>
 #include "Diver.h"
-
+#include "Map.h"
 
 //------------------------------------------------------------------------
 
@@ -23,6 +23,7 @@
 //CSimpleSprite* chest;
 
 Diver* diver;
+Map* gameMap;
 
 int WINDOW_WIDT = APP_INIT_WINDOW_WIDTH;
 int WINDOW_HEIGH = APP_INIT_WINDOW_HEIGHT;
@@ -58,8 +59,9 @@ void Init()
 	//background->SetScale(scaleX);
 
 	diver = new Diver();
-	diver->SetSpeed(100.0f);
+	//diver->SetSpeed(1.0f/15.0f);
 
+	gameMap = new Map(WINDOW_WIDT, WINDOW_HEIGH);
 
 	//cow = App::CreateSprite(".\\TestData\\cow.png", 3, 2);
 	//cow->SetPosition(600.0f, 400.0f);
@@ -98,6 +100,7 @@ void Update(float deltaTime)
 {
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
+	gameMap->Update(deltaTime);
 	diver->Update(deltaTime);
 
 	//background->Update(deltaTime);  // Add this line to update the background animation
@@ -179,6 +182,9 @@ void Render()
 	// Example Sprite Code....
 	//background->Draw();
 	//chest->Draw();
+
+	gameMap->Draw();
+
 	diver->Draw();
 
 	App::Print(10, 10, "Depth: %.2f meters", diver->GetDepth()); // Adjust position and format as needed
@@ -222,6 +228,8 @@ void Shutdown()
 	// Example Sprite Code....
 	//delete cow;
 	delete diver;
+	delete gameMap;
+
 	//delete chest;
 	//delete background;
 	//------------------------------------------------------------------------
