@@ -16,7 +16,7 @@ public:
     Map(int windowWidth, int windowHeight);
     ~Map();
 
-    void Update(float deltaTime);
+    void Update(float deltaTime, float depth);
     void Draw();
 
     void ScrollUp(float deltatime);
@@ -24,17 +24,26 @@ public:
 
 
 private:
+    CSimpleSprite* wateranim;
     CSimpleSprite* waterSprite;
+    CSimpleSprite* sandlayer;
+    std::vector<std::vector<TileType>> tilemap;  // 2D vector to store tilemap data
+
    // float backgroundScale;
 
     // Matrix to represent the tilemap
-    std::vector<std::vector<TileType>> tilemap;
 
     // Vertical scroll speed (adjust as needed)
     float scrollSpeed;
 
     // Y position of the map
     float mapYPosition;
+
+    int rows; // Number of rows in the tilemap
+    int cols; // Number of columns in the tilemap
+    void DrawFirstLayer();  // Helper method to draw the first layer of the map
+    void Map::LoadTilemapFromFile(const char* filename);
+
 };
 
 #endif // MAP_H

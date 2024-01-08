@@ -7,12 +7,15 @@ Diver::Diver() {
     diverSprite = new CSimpleSprite(".\\TestData\\main_diver.png", 4, 4);
     diverX = 400.0f;
     diverY = 400.0f;
+    float initialX = APP_VIRTUAL_WIDTH / 2.0f;
+    float initialY = APP_VIRTUAL_HEIGHT / 4.0f * 3.0f;
+
     health = 3;
-    speed = 1.0f/15.0f; // Set the default speed value (adjust as needed)
+    speed = 1.0f/5.0f; // Set the default speed value (adjust as needed)
     depth = 0.0f;
 
     // Set the initial position to the top of the page
-    diverSprite->SetPosition(diverX, diverY);
+    diverSprite->SetPosition(initialX, initialY);
 
     // Set the initial scale during initialization (adjust the value as needed)
     diverSprite->SetScale(1.0f);
@@ -22,6 +25,9 @@ Diver::Diver() {
 
     // Set the default animation (forwards)
    // diverSprite->SetAnimation(ANIM_FORWARDS);
+
+    isPlaying = true;
+    isDead = false;
 }
 
 Diver::~Diver() {
@@ -35,11 +41,12 @@ void Diver::Update(float deltaTime) {
         depth += 1.0f * deltaTime; // Increase depth when diving down
     }
     else if (App::GetController().GetLeftThumbStickY() < -0.5f && depth > 0.0f) {
-        depth -= 1.0f * deltaTime; // Decrease depth when going up, but prevent going below 0
+       depth -= 1.0f * deltaTime; // Decrease depth when going up, but prevent going below 0
     }
 
     // Handle player input for movement and animation
     HandleInput(deltaTime);
+    CheckScreenCollision();
 }
 
 void Diver::Draw() {
@@ -78,18 +85,20 @@ int Diver::GetHealth() const {
     return health;
 }
 
-void Diver::TakeDamage(int damage) {
-    health -= damage;
-    // TODO: Add logic here for what happens when the player takes damage
-    // check if the player's health reaches zero and handle it accordingly
+void Diver::TakeDamage() {
+    health--;
+
+    if (health <= 0) {
+        isDead = true;
+    }
 }
 
 void Diver::CreateAnimations(float speed) {
     // Create animations for the diver sprite
-    diverSprite->CreateAnimation(ANIM_FORWARDS, speed, { 0, 1, 2, 3, 4 });
-    diverSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 5, 6, 7, 8 });
-    diverSprite->CreateAnimation(ANIM_LEFT, speed, { 9, 10, 11, 12 });
-    diverSprite->CreateAnimation(ANIM_RIGHT, speed, { 13, 14, 15, 16 });
+    diverSprite->CreateAnimation(ANIM_BACKWARDS, speed, { 0, 1, 2, 3 });
+    diverSprite->CreateAnimation(ANIM_LEFT, speed, { 4, 5, 6, 7 });
+    diverSprite->CreateAnimation(ANIM_RIGHT, speed, { 8, 9, 10, 11 });
+    diverSprite->CreateAnimation(ANIM_FORWARDS, speed, {12, 13, 14, 15 });
 }
 
 void Diver::HandleInput(float deltaTime) {
@@ -149,4 +158,49 @@ void Diver::SetDepth(float d) {
 
 float Diver::GetDepth() const {
     return depth;
+}
+
+
+void Diver::CheckScreenCollision() {
+    float diverX, diverY;
+    diverSprite->GetPosition(diverX, diverY);
+
+    // Get the width of the diver sprite
+    float diverWidth = diverSprite->GetWidth();
+
+    // Check for collision with the left side of the screen
+    if (diverX < diverWidth / 2.0f) {
+        // Adjust the diver's position to stay within the left edge
+        diverSprite->SetPosition(diverWidth / 2.0f, diverY);
+    }
+
+    // Check for collision with the right side of the screen
+    if (diverX + diverWidth / 2.0f > APP_VIRTUAL_WIDTH) {
+        // Adjust the diver's position to stay within the right edge
+        diverSprite->SetPosition(APP_VIRTUAL_WIDTH - diverWidth / 2.0f, diverY);
+    }
+
+    if (diverY <= 10) {
+        RepositionOnScreenCollision();
+    }
+}
+
+
+
+void Diver::RepositionOnScreenCollision() {
+    // Subtract one life (add your life management logic here)
+    TakeDamage();
+    // Reposition the diver to the middle of the screen
+    float middleX = (APP_VIRTUAL_WIDTH - diverSprite->GetWidth()) / 2.0f;
+    float middleY = (APP_VIRTUAL_HEIGHT - diverSprite->GetHeight()) / 2.0f;
+    diverSprite->SetPosition(middleX, middleY);
+}
+
+
+bool Diver::IsPlaying() const {
+    return isPlaying;
+}
+
+bool Diver::IsDead() const {
+    return isDead;
 }

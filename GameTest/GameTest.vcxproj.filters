@@ -23,6 +23,7 @@
     </ClCompile>
     <ClCompile Include="Diver.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Homescreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -52,6 +53,7 @@
     </ClInclude>
     <ClInclude Include="Diver.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Homescreen.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NextAPI">
@@ -65,5 +67,6 @@
     <Text Include="ReadMe.txt">
       <Filter>NextAPI</Filter>
     </Text>
+    <Text Include="Layer0.txt" />
   </ItemGroup>
 </Project>

@@ -38,4 +38,33 @@ Devember 29 Updates:
 -> implemented a functioning scrolling feature for up and down
 
 TODO: implement a camera that follows the player and ensures that player is steady in the middle of the page
-		find the right speed to set scroller to
+		find the right speed to set scroller 
+
+
+
+		Updates:
+		- changed screen size to become more narrow
+		- fixed the animation sprite frames, it is fully functioning
+		- added logic for collisions with side of screen
+
+		TODO: ensure user cant change size of screen
+		- ensure screen scrolls regardless of user
+		- if user hits bottom, dies
+
+
+
+
+
+
+		Updates:
+
+		- fixed screen size 758*758
+		- added collion with screen
+			- reposition to center if touch bottom,
+		- cant scroll past end of sand
+		- added home screen (MUST PRESS SPACE TO START)
+		- keep track of dead and playing in diver class
+			dead = game over screen, playing false = game is won screen
+
+		To do:
+		- start adding enemies
