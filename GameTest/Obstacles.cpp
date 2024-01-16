@@ -10,7 +10,7 @@ Obstacles::Obstacles(float sandHeight, float userDepth)
 {
     initializeSprites();
     //initializeCoordinates(sandHeight, userDepth);
-
+    //
 }
 
 Obstacles::~Obstacles()
