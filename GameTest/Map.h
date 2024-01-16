@@ -5,6 +5,7 @@
 #define MAP_H
 
 #include "app/app.h"
+#include "Obstacles.h"
 constexpr  int ANIMATION_ID_WATER = 0;
 enum TileType {
     WATER = 0,

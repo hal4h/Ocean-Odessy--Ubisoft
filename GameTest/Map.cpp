@@ -72,6 +72,7 @@ Map::Map(int windowWidth, int windowHeight) {
     scrollSpeed = 1.0f/9.0f; // Adjust as needed
   //  LoadTilemapFromFile("Layer0.txt");  // Replace with your actual file name
 
+    Obstacles::Obstacles(sandlayer->GetHeight(), mapYPosition);
 }
 
 
