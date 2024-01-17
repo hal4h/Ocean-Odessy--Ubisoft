@@ -11,7 +11,7 @@
 
 class Obstacles {
 public:
-    Obstacles(float sandHeight, float userDepth);
+    Obstacles();
         ~Obstacles();
 
         void initializeSprites();
@@ -39,14 +39,15 @@ public:
     const int TURTLE_COUNT = 1;
     const int WATERMELON_COUNT = 1;
 
-    void DrawObstacles(float yPosition);
-    void Update(float deltaTime);
+    void DrawObstacles(float sandHeight, float yPos);
+        void Update(float deltaTime);
+
+        CSimpleSprite* Obstacles::initRock();
 
 private:
 
-    int generateRandomX(CSimpleSprite* sprite);
+    float generateRandomX(CSimpleSprite* sprite);
 
-    void initRock(CSimpleSprite* sprite);
     void initTire(CSimpleSprite* sprite);
 
     void initYellowJelly(CSimpleSprite* sprite);

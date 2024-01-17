@@ -99,7 +99,7 @@ void CSimpleSprite::Draw()
     float x = m_xpos;
     float y = m_ypos;
 #if APP_USE_VIRTUAL_RES
-    APP_VIRTUAL_TO_NATIVE_COORDS(x, y);
+     APP_VIRTUAL_TO_NATIVE_COORDS(x, y);
 #endif
     
     glPushMatrix();

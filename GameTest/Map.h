@@ -23,11 +23,14 @@ public:
     void ScrollUp(float deltatime);
     void ScrollDown(float deltaTime);
 
+    Obstacles obstacles;
+
 
 private:
     CSimpleSprite* wateranim;
     CSimpleSprite* waterSprite;
     CSimpleSprite* sandlayer;
+    CSimpleSprite* rockSprite;
     std::vector<std::vector<TileType>> tilemap;  // 2D vector to store tilemap data
 
    // float backgroundScale;

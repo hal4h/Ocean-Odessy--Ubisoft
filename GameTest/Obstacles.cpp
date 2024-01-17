@@ -6,7 +6,7 @@
 // create an array of each obstacle
 //  create an array of coordinates for each obstacle
 
-Obstacles::Obstacles(float sandHeight, float userDepth)
+Obstacles::Obstacles()
 {
     initializeSprites();
     //initializeCoordinates(sandHeight, userDepth);
@@ -46,8 +46,11 @@ void Obstacles::Update(float deltaTime)
     // }
 }
 
-void Obstacles::DrawObstacles(float yPos)
+void Obstacles::DrawObstacles(float sandHeight, float yPos)
+
 {
+    initializeCoordinates(sandHeight, yPos);
+
     // Draw the obstacles
     for (CSimpleSprite* rockSprite : rockSprites)
     {
@@ -71,18 +74,17 @@ void Obstacles::initializeSprites()
     // Initialize rock sprites
     for (int i = 0; i < ROCK_COUNT; ++i)
     {
-        CSimpleSprite* rockSprite = nullptr;
-        initRock(rockSprite);
+        CSimpleSprite* rockSprite = initRock();
         rockSprites.push_back(rockSprite);
     }
 
     // Initialize tire sprites
-    for (int i = 0; i < TIRE_COUNT; ++i)
-    {
-        CSimpleSprite* tireSprite = nullptr;
-        initTire(tireSprite);
-        tireSprites.push_back(tireSprite);
-    }
+  //  for (int i = 0; i < TIRE_COUNT; ++i)
+  //  {
+     //   CSimpleSprite* tireSprite = nullptr;
+      //  initTire(tireSprite);
+     //   tireSprites.push_back(tireSprite);
+  //  }
 
     // // Initialize branch sprites
     // for (int i = 0; i < BRANCH_COUNT; ++i)
@@ -163,7 +165,7 @@ void Obstacles::initializeCoordinates(float sandHeight, float userDepth)
     // Initialize coordinates for rock sprites
    for (CSimpleSprite* rockSprite : rockSprites)
     {
-        int randomX = generateRandomX(rockSprite);
+        float randomX = generateRandomX(rockSprite);
         // Set Y value and other properties as needed
         rockSprite->SetPosition(randomX, 50);
    }
@@ -177,12 +179,16 @@ void Obstacles::initializeCoordinates(float sandHeight, float userDepth)
    // }
 }
 
-void Obstacles::initRock(CSimpleSprite* sprite)
+CSimpleSprite* Obstacles::initRock()
 {
-    sprite = new CSimpleSprite(".\\TestData\\obstacles\\rocks.png", 2, 3);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\rocks.png", 2, 3);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5 });
     sprite->SetAnimation(0);
+    sprite->SetPosition(50, 50);
+
+    return sprite;
 }
+
 
 void Obstacles::initTire(CSimpleSprite* sprite)
 {
@@ -240,16 +246,18 @@ void Obstacles::initBranch(CSimpleSprite* sprite)
     sprite = new CSimpleSprite(".\\TestData\\obstacles\\branch.png", 1, 1);
 }
 
-int Obstacles::generateRandomX(CSimpleSprite* sprite)
+float Obstacles::generateRandomX(CSimpleSprite* sprite)
 {
     // Assuming sprite is centered on its X-axis, you may need to adjust accordingly
     float spriteWidth = sprite->GetWidth();
 
     // Generate a random X-coordinate within the game screen
     // The +1 ensures that the entire sprite remains within the screen
-    int minX = 0 + (spriteWidth / 2.0f) + 1;
-    int maxX = 768 - (spriteWidth / 2.0f) - 1;
+    float minX = 0 + (spriteWidth / 2.0f) + 1;
+    float maxX = APP_VIRTUAL_WIDTH - (spriteWidth / 2.0f) - 1;
 
-    int randomX = rand() % (maxX - minX + 1) + minX;
+    // Generate a random number between those two values
+    float randomX = minX + static_cast<float>(rand()) / RAND_MAX * (maxX - minX);
+
     return randomX;
 }

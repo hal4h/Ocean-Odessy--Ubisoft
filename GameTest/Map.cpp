@@ -15,6 +15,7 @@
 
 
 Map::Map(int windowWidth, int windowHeight) {
+
     mapYPosition = 2.0f; // Initial Y position of the map
 
     // Initialize the water sprite with an 8x2 animated sprite representing waves
@@ -70,9 +71,10 @@ Map::Map(int windowWidth, int windowHeight) {
    float waterSpeed = 1.0f / 6.0f; // Adjust as needed
    wateranim->CreateAnimation(ANIMATION_ID_WATER, animationSpeed, { 0, 1,2 ,3,4,5,6,7,8,9,10,11,12,12,13,14,15,16});
     scrollSpeed = 1.0f/9.0f; // Adjust as needed
-  //  LoadTilemapFromFile("Layer0.txt");  // Replace with your actual file name
+   //  LoadTilemapFromFile("Layer0.txt");  // Replace with your actual file name
 
-    Obstacles::Obstacles(sandlayer->GetHeight(), mapYPosition);
+    rockSprite = obstacles.initRock();
+
 }
 
 
@@ -105,12 +107,13 @@ void Map::Update(float deltaTime, float depth) {
    // waterSprite->SetColor(0.678f, 0.8474f, 0.902f);
 
   //  sandlayer->Update(deltaTime);
+    rockSprite->Update(deltaTime);
 }
 
 void Map::Draw() {
     // Draw the tilemap
 
-    float scaleX = static_cast<float>(758) / (cols * waterSprite->GetWidth());
+    float scaleX = static_cast<float>(APP_VIRTUAL_WIDTH) / (cols * waterSprite->GetWidth());
 
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < cols; ++col) {
@@ -148,6 +151,14 @@ void Map::Draw() {
 
 
       }
+
+      
+     // CSimpleSprite* rockSprite =  obstacles.initRock();
+       //   int x = 10;
+          //int y = 20;
+         rockSprite->SetPosition(500, 1000 + mapYPosition);
+          rockSprite->Draw();
+  
 }
 
 void Map::ScrollUp(float deltatime) {
