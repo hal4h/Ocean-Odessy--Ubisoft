@@ -27,9 +27,13 @@ public:
     std::vector<CSimpleSprite*> squidSprites;
     std::vector<CSimpleSprite*> turtleSprites;
     std::vector<CSimpleSprite*> watermelonSprites;
+    std::vector<CSimpleSprite*> yellowJellySprites;
+    std::vector<CSimpleSprite*> fishSprites;
+
 
     const int ROCK_COUNT = 50;
     const int TIRE_COUNT = 40;
+    const int FISH_COUNT = 30;
     const int BRANCH_COUNT = 30;
     const int CATTAIL_COUNT = 20;
     const int CRAB_COUNT = 2;
@@ -38,12 +42,13 @@ public:
     const int SQUID_COUNT = 1;
     const int TURTLE_COUNT = 1;
     const int WATERMELON_COUNT = 1;
+    const int YELLOW_JELLY_COUNT = 1;
 
-    void DrawObstacles(float sandHeight, float yPos);
+    void DrawObstacles(float yPos);
         void Update(float deltaTime);
 
         CSimpleSprite* Obstacles::initRock();
-
+    const int MAX = 10304;
 private:
 
     float generateRandomX(CSimpleSprite* sprite);
