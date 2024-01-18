@@ -73,11 +73,10 @@ Map::Map(int windowWidth, int windowHeight) {
     scrollSpeed = 1.0f/9.0f; // Adjust as needed
    //  LoadTilemapFromFile("Layer0.txt");  // Replace with your actual file name
 
-    rockSprite = obstacles.initRock();
+    obstacles.initializeSprites();
+    obstacles.initializeCoordinates(mapYPosition);
 
 }
-
-
 
 Map::~Map() {
     delete waterSprite;
@@ -131,8 +130,6 @@ void Map::Draw() {
         }
     }
 
-
-// draw sand
     sandlayer->SetPosition(sandlayer->GetWidth() / 2.0f, sandlayer->GetHeight() / 2.0f + mapYPosition);
       sandlayer->Draw();
 
@@ -140,25 +137,13 @@ void Map::Draw() {
       float start = wateranim->GetWidth() / 2.0f;
       float waterAnimWidth = wateranim->GetWidth();
 
-
       for (int i = 0; i < cols; i++) {
-
           float xPos = start + i * waterAnimWidth;
-
           wateranim->SetAnimation(ANIMATION_ID_WATER);
           wateranim->SetPosition(xPos, sandlayer->GetHeight() + wateranim->GetHeight() / 2.0f + mapYPosition);
           wateranim->Draw();
-
-
       }
-
-      
-     // CSimpleSprite* rockSprite =  obstacles.initRock();
-       //   int x = 10;
-          //int y = 20;
-         rockSprite->SetPosition(500, 1000 + mapYPosition);
-          rockSprite->Draw();
-  
+    obstacles.DrawObstacles(mapYPosition);
 }
 
 void Map::ScrollUp(float deltatime) {
