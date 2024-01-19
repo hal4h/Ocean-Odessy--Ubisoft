@@ -12,10 +12,10 @@
 class Obstacles {
 public:
     Obstacles();
-        ~Obstacles();
+    ~Obstacles();
 
-        void initializeSprites();
-        void initializeCoordinates(float sandHeight, float userDepth);
+    void initializeSprites();
+    void initializeCoordinates(float userDepth);
 
     std::vector<CSimpleSprite*> rockSprites;
     std::vector<CSimpleSprite*> tireSprites;
@@ -27,38 +27,44 @@ public:
     std::vector<CSimpleSprite*> squidSprites;
     std::vector<CSimpleSprite*> turtleSprites;
     std::vector<CSimpleSprite*> watermelonSprites;
+    std::vector<CSimpleSprite*> yellowJellySprites;
+    std::vector<CSimpleSprite*> fishSprites;
+
+
 
     const int ROCK_COUNT = 50;
     const int TIRE_COUNT = 40;
+    const int FISH_COUNT = 30;
     const int BRANCH_COUNT = 30;
     const int CATTAIL_COUNT = 20;
     const int CRAB_COUNT = 2;
     const int FROG_COUNT = 1;
-    const int PINKJELLY_COUNT = 1;
+    const int PINK_JELLY_COUNT = 1;
     const int SQUID_COUNT = 1;
     const int TURTLE_COUNT = 1;
     const int WATERMELON_COUNT = 1;
+    const int YELLOW_JELLY_COUNT = 1;
 
-    void DrawObstacles(float sandHeight, float yPos);
-        void Update(float deltaTime);
+    void DrawObstacles(float yPos);
+    void Update(float deltaTime);
 
-        CSimpleSprite* Obstacles::initRock();
-
+    const int MAX = 10304;
 private:
 
     float generateRandomX(CSimpleSprite* sprite);
 
-    void initTire(CSimpleSprite* sprite);
-
-    void initYellowJelly(CSimpleSprite* sprite);
-    void initFrog(CSimpleSprite* sprite);
-    void initPinkJelly(CSimpleSprite* sprite);
-    void initSquid(CSimpleSprite* sprite);
-    void initTurtle(CSimpleSprite* sprite);
-    void initWatermelon(CSimpleSprite* sprite);
-    void initCattail(CSimpleSprite* sprite);
-    void initCrab(CSimpleSprite* sprite);
-    void initBranch(CSimpleSprite* sprite);
+    CSimpleSprite* initRock();
+    CSimpleSprite* initTire();
+    CSimpleSprite* initFish();
+    CSimpleSprite* initYellowJelly();
+    CSimpleSprite* initFrog();
+    CSimpleSprite* initPinkJelly();
+    CSimpleSprite* initSquid();
+    CSimpleSprite* initTurtle();
+    CSimpleSprite* initWatermelon();
+    CSimpleSprite* initCattail();
+    CSimpleSprite* initCrab();
+    CSimpleSprite* initBranch();
 };
 
 #endif

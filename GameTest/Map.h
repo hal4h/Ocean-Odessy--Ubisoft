@@ -25,8 +25,10 @@ public:
 
     Obstacles obstacles;
 
+    float GetYPos();
 
 private:
+  //  float delta;
     CSimpleSprite* wateranim;
     CSimpleSprite* waterSprite;
     CSimpleSprite* sandlayer;

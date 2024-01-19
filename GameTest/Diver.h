@@ -22,15 +22,17 @@ public:
     ~Diver();
 
     void Update(float deltaTime);
-    void Draw();
-    void SetPosition(float x, float y);
-    void SetDepth(float d); // Added method to set depth
+    void Draw(float mapY); // Added method to set depth
     float GetDepth() const;  // Added method to get depth
     void SetAngle(float a);
     void SetScale(float s);
     void SetColor(float r, float g, float b);
     void GetPosition(float& x, float& y);
     void CheckScreenCollision();
+
+  //  void Diver::SetDepth(float d) {
+
+    void SetPosition(float x, float y);
 
 
     // Health-related methods

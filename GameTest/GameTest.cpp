@@ -92,7 +92,7 @@ void Render()
 
 		if (homescreen->IsGameStarted()) {
 			gameMap->Draw();
-			diver->Draw();
+			diver->Draw(1);
 
 			// Add other game elements render logic as needed
 		}

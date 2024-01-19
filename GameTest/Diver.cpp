@@ -8,12 +8,12 @@ Diver::Diver() {
     diverX = 400.0f;
     diverY = 400.0f;
     float initialX = APP_VIRTUAL_WIDTH / 2.0f;
-    float initialY = APP_VIRTUAL_HEIGHT / 4.0f * 3.0f;
+    float initialY = APP_VIRTUAL_HEIGHT / 5.0f;
 
     health = 3;
-    speed = 1.0f/5.0f; // Set the default speed value (adjust as needed)
-    depth = 0.0f;
-
+    speed = 1.0f/6.0f; //et the default speed value (adjust as needed)
+    //depth = 0.0f;
+        
     // Set the initial position to the top of the page
     diverSprite->SetPosition(initialX, initialY);
 
@@ -35,21 +35,28 @@ Diver::~Diver() {
 }
 
 void Diver::Update(float deltaTime) {
+   
+
     diverSprite->Update(deltaTime);
 
-    if (App::GetController().GetLeftThumbStickY() > 0.5f) {
-        depth += 1.0f * deltaTime; // Increase depth when diving down
-    }
-    else if (App::GetController().GetLeftThumbStickY() < -0.5f && depth > 0.0f) {
-       depth -= 1.0f * deltaTime; // Decrease depth when going up, but prevent going below 0
-    }
+    
+    //if (App::GetController().GetLeftThumbStickY() > 0.5f) {
+      //  depth += 1.0f * deltaTime; // Increase depth when diving down
+    //}
+    //else if (App::GetController().GetLeftThumbStickY() < -0.5f && depth > 0.0f) {
+    //   depth -= 1.0f * deltaTime; // Decrease depth when going up, but prevent going below 0
+  //  }
 
     // Handle player input for movement and animation
     HandleInput(deltaTime);
     CheckScreenCollision();
 }
 
-void Diver::Draw() {
+void Diver::Draw(float deltaTime) {
+    float x, y;
+    diverSprite->GetPosition(x, y);
+    diverSprite->SetPosition(x, y - 1.0f);
+
     diverSprite->Draw();
     // TODO: add health display logic here if needed
 }
@@ -107,7 +114,7 @@ void Diver::HandleInput(float deltaTime) {
         float x, y;
         diverSprite->GetPosition(x, y);
         // x += speed * deltaTime; // Adjust for deltaTime
-        x += 1.0f;
+        x += 2.0f;
         diverSprite->SetPosition(x, y);
     }
     else if (App::GetController().GetLeftThumbStickX() < -0.5f) {
@@ -115,7 +122,7 @@ void Diver::HandleInput(float deltaTime) {
         float x, y;
         diverSprite->GetPosition(x, y);
         // x -= speed * deltaTime; // Adjust for deltaTime
-        x -= 1.0f;
+        x -= 2.0f;
         diverSprite->SetPosition(x, y);
     }
     else if (App::GetController().GetLeftThumbStickY() > 0.5f) {
@@ -123,7 +130,7 @@ void Diver::HandleInput(float deltaTime) {
         float x, y;
         diverSprite->GetPosition(x, y);
         //y += speed * deltaTime; // Adjust for deltaTime
-        y += 1.0f;
+        y += 1.75f;
         diverSprite->SetPosition(x, y);
         //depth++;
     }
@@ -132,7 +139,7 @@ void Diver::HandleInput(float deltaTime) {
         float x, y;
         diverSprite->GetPosition(x, y);
         // y -= speed * deltaTime; // Adjust for deltaTime
-        y -= 1.0f;
+        y -= 1.75f;
         diverSprite->SetPosition(x, y);
         //depth--;
 
@@ -152,9 +159,9 @@ float Diver::GetSpeed() const {
 
 
 
-void Diver::SetDepth(float d) {
-    depth = d;
-}
+//void Diver::SetDepth(float d) {
+  //  depth = d;
+//}
 
 float Diver::GetDepth() const {
     return depth;
@@ -190,6 +197,10 @@ void Diver::CheckScreenCollision() {
 void Diver::RepositionOnScreenCollision() {
     // Subtract one life (add your life management logic here)
     TakeDamage();
+
+    if (isDead == false) {
+
+    }
     // Reposition the diver to the middle of the screen
     float middleX = (APP_VIRTUAL_WIDTH - diverSprite->GetWidth()) / 2.0f;
     float middleY = (APP_VIRTUAL_HEIGHT - diverSprite->GetHeight()) / 2.0f;
