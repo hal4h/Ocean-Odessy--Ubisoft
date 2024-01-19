@@ -15,11 +15,11 @@ Obstacles::Obstacles()
 
 Obstacles::~Obstacles()
 {
-    for (CSimpleSprite* rockSprite : rockSprites)
+    for (CSimpleSprite *rockSprite : rockSprites)
     {
         delete rockSprite;
     }
-    for (CSimpleSprite* tireSprite : tireSprites)
+    for (CSimpleSprite *tireSprite : tireSprites)
     {
         delete tireSprite;
     }
@@ -28,11 +28,11 @@ Obstacles::~Obstacles()
 void Obstacles::Update(float deltaTime)
 {
     // Update the obstacles
-    for (CSimpleSprite* rockSprite : rockSprites)
+    for (CSimpleSprite *rockSprite : rockSprites)
     {
         rockSprite->Update(deltaTime);
     }
-    for (CSimpleSprite* tireSprite : tireSprites)
+    for (CSimpleSprite *tireSprite : tireSprites)
     {
         tireSprite->Update(deltaTime);
     }
@@ -51,7 +51,7 @@ void Obstacles::DrawObstacles(float speed)
     float currentX, currentY;
 
     // Draw the obstacles
-    for (CSimpleSprite* rockSprite : rockSprites)
+    for (CSimpleSprite *rockSprite : rockSprites)
     {
         rockSprite->GetPosition(currentX, currentY);
        rockSprite->SetPosition(currentX, currentY- speed ); // Add yPos to the current Y position, Set the updated position
@@ -96,7 +96,7 @@ void Obstacles::initializeSprites()
     // Initialize rock sprites
     for (int i = 0; i < ROCK_COUNT; ++i)
     {
-        CSimpleSprite* rockSprite = initRock();
+        CSimpleSprite *rockSprite = initRock();
         rockSprites.push_back(rockSprite);
     }
 
@@ -216,13 +216,18 @@ void Obstacles::initializeCoordinates(float userDepth)
     //   start+=differnece;
 }
 
-CSimpleSprite* Obstacles::initRock()
+CSimpleSprite *Obstacles::initRock()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\rocks.png", 2, 3);
-    sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5 });
+    CSimpleSprite *sprite = new CSimpleSprite(".\\TestData\\rocks.png", 2, 3);
+    sprite->CreateAnimation(0, 1.0f / 6.0f, {0, 1, 2, 3, 4, 5});
     sprite->SetAnimation(0);
     return sprite;
 }
+CSimpleSprite *Obstacles::initFish()
+{
+    CSimpleSprite *sprite = new CSimpleSprite(".\\TestData\\obstacles\\fish.png", 4, 1);
+    sprite->CreateAnimation(0, 1.0f / 6.0f, {0, 1, 2, 3});
+    sprite->SetAnimation(0);
 
 CSimpleSprite* Obstacles::initTire()
 {
@@ -301,7 +306,7 @@ CSimpleSprite* Obstacles::initBranch()
     return new CSimpleSprite(".\\TestData\\obstacles\\branch.png", 1, 1);
 }
 
-float Obstacles::generateRandomX(CSimpleSprite* sprite)
+float Obstacles::generateRandomX(CSimpleSprite *sprite)
 {
     // Assuming sprite is centered on its X-axis, you may need to adjust accordingly
     float spriteWidth = sprite->GetWidth();
