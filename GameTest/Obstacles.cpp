@@ -321,3 +321,113 @@ float Obstacles::generateRandomX(CSimpleSprite *sprite)
 
     return randomX;
 }
+
+
+/*
+create a method that returns a vectors of all the objects whos coordinates are visible in the game screen,
+meaning coordinates are between GAME_WIDTH and GAME_HEIGHT
+iterate over the vectors of all objects in the .h file, get the y value, if between 0 and GAME_HEIGHT, add it to the vectors of visible objects
+return the vector 
+*/ 
+
+/**
+ * method that returns a vector of all the objects whos coordinates are visible in the game screen,
+ * everyframe, we are still updating the obstacle's coordinates, only draw the ones on the screen tho 
+*/
+std::vector<CSimpleSprite*> Obstacles::getVisibleObjects(){
+    std::vector<CSimpleSprite*> visibleObjects;
+    for (CSimpleSprite* rockSprite : rockSprites)
+    {
+        float y = rockSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(rockSprite);
+        }
+    }
+
+    for (CSimpleSprite* tireSprite : tireSprites){
+        float y = tireSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(tireSprite);
+        }
+    }
+
+    for (CSimpleSprite* fishSprite : fishSprites){
+        float y = fishSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(fishSprite);
+        }
+    }
+
+    for (CSimpleSprite* yellowJellySprite : yellowJellySprites){
+        float y = yellowJellySprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(yellowJellySprite);
+        }
+    }
+
+    for (CSimpleSprite* frogSprite : frogSprites){
+        float y = frogSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(frogSprite);
+        }
+    }
+
+    for (CSimpleSprite* pinkJellySprite : pinkJellySprites){
+        float y = pinkJellySprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(pinkJellySprite);
+        }
+    }
+
+    for (CSimpleSprite* squidSprite : squidSprites){
+        float y = squidSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(squidSprite);
+        }
+    }
+
+    for (CSimpleSprite* turtleSprite : turtleSprites){
+        float y = turtleSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(turtleSprite);
+        }
+    }
+
+    for (CSimpleSprite* watermelonSprite : watermelonSprites){
+        float y = watermelonSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(watermelonSprite);
+        }
+    }
+
+    for (CSimpleSprite* cattailSprite : cattailSprites){
+        float y = cattailSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(cattailSprite);
+        }
+    }
+
+    for (CSimpleSprite* crabSprite : crabSprites){
+        float y = crabSprite->GetPosition().y;
+        if (y > 0 && y < GAME_HEIGHT)
+        {
+            visibleObjects.push_back(crabSprite);
+        }
+    }
+
+    return visibleObjects;
+}
+/*
+method that deletes objects as soon as the leave the screen, since we cant go back 
+
+*/
