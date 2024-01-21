@@ -100,7 +100,6 @@ void Map::Draw()
             waterSprite->Draw();
         }
     }
-
     sandlayer->SetPosition(sandlayer->GetWidth() / 2.0f, sandlayer->GetHeight() / 2.0f + mapYPosition);
     sandlayer->Draw();
 
@@ -119,9 +118,9 @@ void Map::Draw()
     // Draw the chest
     chest->SetPosition(chest->GetWidth() / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
     chest->Draw();
+    drawMeter();
 
-    void drawChest()
-
+    drawChest();
 }
 
 void Map::ScrollUp(float deltatime)
@@ -188,7 +187,19 @@ void Map::drawChest()
     chest->Draw();
 }
 
-CSimpleSprite* Map::getChest()
+CSimpleSprite *Map::getChest()
 {
-    return chest;   
+    return chest;
+}
+
+// display meters left until chest is reached
+void Map::drawMeter()
+{
+    const float max = rows * waterSprite->GetHeight();
+    float meters = max - mapYPosition;
+
+    // print meters left
+    App::Print(10,10, std::to_string(meters));
+
+
 }
