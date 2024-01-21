@@ -57,6 +57,8 @@ private:
     // init chest
     // draw chest
     void drawChest();
+    // draw meters
+    void drawMeter();
 
 };
 
