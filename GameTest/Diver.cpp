@@ -55,7 +55,7 @@ void Diver::Update(float deltaTime) {
 void Diver::Draw(float deltaTime) {
     float x, y;
     diverSprite->GetPosition(x, y);
-    diverSprite->SetPosition(x, y - 1.0f);
+    diverSprite->SetPosition(x, y );
 
     diverSprite->Draw();
     // TODO: add health display logic here if needed
@@ -130,7 +130,7 @@ void Diver::HandleInput(float deltaTime) {
         float x, y;
         diverSprite->GetPosition(x, y);
         //y += speed * deltaTime; // Adjust for deltaTime
-        y += 1.75f;
+        y += 0.0f;
         diverSprite->SetPosition(x, y);
         //depth++;
     }
@@ -215,3 +215,13 @@ bool Diver::IsPlaying() const {
 bool Diver::IsDead() const {
     return isDead;
 }
+
+
+
+
+
+
+
+
+
+

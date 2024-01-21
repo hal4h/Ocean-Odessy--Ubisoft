@@ -49,6 +49,9 @@ public:
     void Update(float deltaTime);
 
     const int MAX = 10304;
+
+    std::vector<CSimpleSprite*> getVisibleObjects();
+
 private:
 
     float generateRandomX(CSimpleSprite* sprite);
