@@ -174,9 +174,9 @@ float Map::GetYPos()
 }
 
 // returns vectors of all visibile objects from calling objects method
-std::vector<Obstacle> Map::getVisibleObstacles()
+std::vector<CSimpleSprite*> Map::getVisibleObstacles()
 {
-    return obstacles.getVisibleObstacles();
+    return obstacles.getVisibleObjects();
 }
 
 // display meters left to finish
@@ -188,31 +188,6 @@ void Map::drawChest()
 }
 
 CSimpleSprite *Map::getChest()
-{
-    return chest;
-}
-
-// method to return mapY location
-float Map::GetYPos()
-{
-    return mapYPosition;
-}
-
-// returns vectors of all visibile objects from calling objects method
-std::vector<CSimpleSprite*> Map::getVisibleObstacles()
-{
-   return obstacles.getVisibleObjects();
-}
-
-// display meters left to finish
-
-void Map::drawChest()
-{
-    chest->SetPosition(chest->GetWidth() / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
-    chest->Draw();
-}
-
-CSimpleSprite* Map::getChest()
 {
     return chest;
 }

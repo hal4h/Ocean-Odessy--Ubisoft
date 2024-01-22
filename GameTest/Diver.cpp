@@ -228,9 +228,9 @@ bool Diver::Intersects(CSimpleSprite* obstacle){
     float diverHeight = diverSprite->GetHeight();
 
     float obsX, obsY;
-    obstacle.GetPosition(obsX, obsY);
-    float obstacleWidth = obstacle.GetWidth();
-    float obstacleHeight = obstacle.GetHeight();
+    obstacle->GetPosition(obsX, obsY);
+    float obstacleWidth = obstacle->GetWidth();
+    float obstacleHeight = obstacle->GetHeight();
 
     // check if diver hits any side of obstacle
     if(x+diverWidth/2 > obsX && x-diverWidth/2 < obsX+obstacleWidth){
@@ -240,30 +240,6 @@ bool Diver::Intersects(CSimpleSprite* obstacle){
     }
 
 }
-
-
-// method to check if the diver intersects with an obstacle, returns true if it does
-// remember position of object is in the middle of the object, so you need to adjust the position of the diver to the left and right by half the width of the object
-bool Diver::Intersects(CSimpleSprite* obstacle) {
-    float x, y;
-    diverSprite->GetPosition(x, y);
-    float diverWidth = diverSprite->GetWidth();
-    float diverHeight = diverSprite->GetHeight();
-
-    float obsX, obsY;
-    obstacle->GetPosition(obsX, obsY);
-    float obstacleWidth = obstacle->GetWidth();
-    float obstacleHeight = obstacle->GetHeight();
-
-    // check if diver hits any side of obstacle
-    if (x + diverWidth / 2 > obsX && x - diverWidth / 2 < obsX + obstacleWidth) {
-        if (y + diverHeight / 2 > obsY && y - diverHeight / 2 < obsY + obstacleHeight) {
-            return true;
-        }
-    }
-
-}
-
 
 // take vector as a parameter, and return true if the diver intersects with any of the obstacles in the vector
 // if intersects, break for loop, call take damage method, delete obstacle from vector, and return true
