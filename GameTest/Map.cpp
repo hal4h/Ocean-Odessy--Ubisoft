@@ -58,23 +58,8 @@ void Map::Update(float deltaTime)
     obstacles.Update(deltaTime);
 
     // if (App::GetController().GetLeftThumbStickY() > 0.5f) {
+    // constant scrolling 
     ScrollDown(deltaTime);
-
-    // }
-    // else if (App::GetController().GetLeftThumbStickY() < -0.5f) {
-    //   ScrollUp(deltaTime);
-    // }
-    // depth = min(depth, 5.0f);
-    // Calculate new RGB values based on depth
-    //  float red = max(0.0f, 0.9f - depth / 5.0f);
-    //  float green = max(0.0f, 0.9f - depth / 5.0f);
-    // float blue = max(0.0f, 0.9f - depth / 5.0f);
-
-    // Set the new color for the water sprite
-    //  waterSprite->SetColor(red, green, blue);
-    // waterSprite->SetColor(0.678f, 0.8474f, 0.902f);
-
-    //  sandlayer->Update(deltaTime);
 }
 
 void Map::Draw()
