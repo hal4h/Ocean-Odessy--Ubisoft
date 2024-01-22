@@ -3,22 +3,24 @@
 //------------------------------------------------------------------------
 #include "stdafx.h"
 //------------------------------------------------------------------------
-#include <windows.h> 
-#include <math.h>  
+#include <windows.h>
+#include <math.h>
 //------------------------------------------------------------------------
 #include "app\app.h"
-//#include <algorithm>
+#include "app\AppSettings.h"
+
+// #include <algorithm>
 #include "Diver.h"
 #include "Map.h"
 #include "Homescreen.h"
-
+#include "Obstacles.h"
 
 HomeScreen* homescreen;
 Diver* diver;
 Map* gameMap;
 
-int WINDOW_WIDT = APP_INIT_WINDOW_WIDTH;
-int WINDOW_HEIGH = APP_INIT_WINDOW_HEIGHT;
+// int WINDOW_WIDT = APP_INIT_WINDOW_WIDTH;
+// int WINDOW_HEIGH = APP_INIT_WINDOW_HEIGHT;
 float depth;
 
 enum
@@ -37,20 +39,18 @@ void Init()
 {
 	homescreen = new HomeScreen();
 	diver = new Diver();
-	gameMap = new Map(WINDOW_WIDT, WINDOW_HEIGH);
-
-
+	gameMap = new Map(APP_VIRTUAL_WIDTH, APP_VIRTUAL_HEIGHT);
 	//------------------------------------------------------------------------
-	//const char* sound = ".\\TestData\\mletoff.wav";
-	//App::PlaySound(sound);
-	//App::StopSound(sound);
+	// const char* sound = ".\\TestData\\mletoff.wav";
+	// App::PlaySound(sound);
+	// App::StopSound(sound);
 
-	//App::PlaySound(sound);
-	
-	//if (App::IsSoundPlaying(sound)) {
+	// App::PlaySound(sound);
+
+	// if (App::IsSoundPlaying(sound)) {
 	//	App::Print(10,10, "The sound is playing");
-//	}
-	//else {
+	//	}
+	// else {
 	//	App::Print(300, 10, "No sound is playing");
 	//}
 }
@@ -64,56 +64,65 @@ void Update(float deltaTime)
 
 	//------------------------------------------------------------------------
 	// Example Sprite Code...
-	//float depth = diver->GetDepth();
-	if (homescreen->IsGameStarted()) {
-		diver->Update(deltaTime);
-		gameMap->Update(deltaTime, diver->GetDepth());
+	// float depth = diver->GetDepth();
+	if (homescreen->IsGameStarted())
+	{
+		gameMap->Update(deltaTime);
+		// get current obstacles
+		std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
+		// get chest 
+		CSimpleSprite* chest = gameMap->getChest();
+		diver->Update(deltaTime, obstacles, chest); // insert vector of obstacles here
 
-		// Add other game elements update logic as needed
+		//if (diver->)
 	}
-	else {
+	else
+	{
 		homescreen->Update(deltaTime);
 	}
-
-	
-
 }
 
 //------------------------------------------------------------------------
-// Add your display calls here (DrawLine,Print, DrawSprite.) 
-// See App.h 
+// Add your display calls here (DrawLine,Print, DrawSprite.)
+// See App.h
 //------------------------------------------------------------------------
 void Render()
-{	
+{
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	//background->Draw();
-	//chest->Draw();
+	// background->Draw();
+	// chest->Draw();
 
-		if (homescreen->IsGameStarted()) {
+	if (homescreen->IsGameStarted())
+	{
+		while (!diver->IsDead())
+		{
 			gameMap->Draw();
-			diver->Draw(1);
+			diver->Draw();
+		}
 
-			// Add other game elements render logic as needed
-		}
-		else {
-			homescreen->Render();
-		}
-	
+		// call end game stuff
+
+	// Add other game elements render logic as needed
+	}
+	else
+	{
+		homescreen->Render();
+	}
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
 // Just before the app exits.
 //------------------------------------------------------------------------
 void Shutdown()
-{	
+{
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	//delete cow;
+	// delete cow;
 	delete diver;
 	delete gameMap;
-
-	//delete chest;
-	//delete background;
+	delete homescreen;
+	// delete chest;
+	// delete background;
 	//------------------------------------------------------------------------
 }

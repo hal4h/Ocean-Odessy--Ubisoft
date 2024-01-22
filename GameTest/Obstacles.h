@@ -17,9 +17,11 @@ public:
     void initializeSprites();
     void initializeCoordinates(float userDepth);
 
+    std::vector<CSimpleSprite*> getVisibleObjects();
+
     std::vector<CSimpleSprite*> rockSprites;
     std::vector<CSimpleSprite*> tireSprites;
-    std::vector<CSimpleSprite*> branchSprites;
+    std::vector<CSimpleSprite*> bottleSprites;
     std::vector<CSimpleSprite*> cattailSprites;
     std::vector<CSimpleSprite*> crabSprites;
     std::vector<CSimpleSprite*> frogSprites;
@@ -35,7 +37,7 @@ public:
     const int ROCK_COUNT = 50;
     const int TIRE_COUNT = 40;
     const int FISH_COUNT = 30;
-    const int BRANCH_COUNT = 30;
+    const int BOTTLE_COUNT = 30;
     const int CATTAIL_COUNT = 20;
     const int CRAB_COUNT = 2;
     const int FROG_COUNT = 1;
@@ -49,9 +51,6 @@ public:
     void Update(float deltaTime);
 
     const int MAX = 10304;
-
-    std::vector<CSimpleSprite*> getVisibleObjects();
-
 private:
 
     float generateRandomX(CSimpleSprite* sprite);
@@ -67,7 +66,7 @@ private:
     CSimpleSprite* initWatermelon();
     CSimpleSprite* initCattail();
     CSimpleSprite* initCrab();
-    CSimpleSprite* initBranch();
+    CSimpleSprite* initBottle();
 };
 
 #endif
