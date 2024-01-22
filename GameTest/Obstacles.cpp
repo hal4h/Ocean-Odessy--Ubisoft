@@ -20,6 +20,8 @@ Obstacles::~Obstacles()
     {
         delete tireSprite;
     }
+
+    // add code to delete other sprites 
 }
 
 void Obstacles::Update(float deltaTime)
@@ -37,10 +39,10 @@ void Obstacles::Update(float deltaTime)
     {
         bottle->Update(deltaTime);
     }
-    // for (CSimpleSprite *cattailSprite : cattailSprites)
-    // {
-    //     cattailSprite->Update(deltaTime);
-    // }
+     for (CSimpleSprite *frog : frogSprites)
+     {
+         frog->Update(deltaTime);
+     }
 }
 
 void Obstacles::DrawObstacles(float speed)
