@@ -3,12 +3,9 @@
 
 #include "Obstacles.h"
 
-// create an array of each obstacle
-//  create an array of coordinates for each obstacle
-
 Obstacles::Obstacles()
 {
-    initializeSprites();
+    initializeSprites(); // create the sprites,
     // initializeCoordinates(sandHeight, userDepth);
     //
 }
