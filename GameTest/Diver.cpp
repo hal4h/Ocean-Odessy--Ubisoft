@@ -48,7 +48,7 @@ void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, CSimp
     diverSprite->Update(deltaTime); // update diver animation
 
     // Handle player input for movement and animation
-    HandleInput(deltaTime);
+    HandleInput(deltaTime); 
     CheckScreenCollision();
     IsColliding(obstacles);
     GameWon(chest);
@@ -216,6 +216,29 @@ bool Diver::IsPlaying() const {
 
 bool Diver::IsDead() const {
     return isDead;
+}
+
+
+// method to check if the diver intersects with an obstacle, returns true if it does
+// remember position of object is in the middle of the object, so you need to adjust the position of the diver to the left and right by half the width of the object
+bool Diver::Intersects(CSimpleSprite* obstacle){
+    float x,y;
+    diverSprite->GetPosition(x,y);
+    float diverWidth = diverSprite->GetWidth();
+    float diverHeight = diverSprite->GetHeight();
+
+    float obsX, obsY;
+    obstacle.GetPosition(obsX, obsY);
+    float obstacleWidth = obstacle.GetWidth();
+    float obstacleHeight = obstacle.GetHeight();
+
+    // check if diver hits any side of obstacle
+    if(x+diverWidth/2 > obsX && x-diverWidth/2 < obsX+obstacleWidth){
+        if(y+diverHeight/2 > obsY && y-diverHeight/2 < obsY+obstacleHeight){
+            return true;
+        }
+    }
+
 }
 
 

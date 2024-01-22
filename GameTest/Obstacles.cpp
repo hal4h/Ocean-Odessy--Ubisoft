@@ -72,8 +72,8 @@ void Obstacles::DrawObstacles(float speed)
     for (CSimpleSprite* cattailSprite : cattailSprites)
     {
         cattailSprite->GetPosition(currentX, currentY);
-        cattailSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-        cattailSprite->Draw();
+            cattailSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+            cattailSprite->Draw();
     }
     for (CSimpleSprite* crabSprite : crabSprites) {
         crabSprite->GetPosition(currentX, currentY);
@@ -102,7 +102,7 @@ void Obstacles::DrawObstacles(float speed)
         squidSprite->Draw();
     }
 
-    for (CSimpleSprite* fishSprite : fishSprites)
+       for (CSimpleSprite* fishSprite : fishSprites)
     {
         fishSprite->GetPosition(currentX, currentY);
         fishSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
@@ -248,8 +248,8 @@ CSimpleSprite* Obstacles::initRock()
 }
 CSimpleSprite* Obstacles::initFish()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\fish.png", 4, 1);
-    sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
+    CSimpleSprite *sprite = new CSimpleSprite(".\\TestData\\obstacles\\fish.png", 4, 1);
+    sprite->CreateAnimation(0, 1.0f / 6.0f, {0, 1, 2, 3});
     sprite->SetAnimation(0);
     return sprite;
 }
@@ -354,14 +354,14 @@ float Obstacles::generateRandomX(CSimpleSprite* sprite)
 create a method that returns a vectors of all the objects whos coordinates are visible in the game screen,
 meaning coordinates are between GAME_WIDTH and GAME_HEIGHT
 iterate over the vectors of all objects in the .h file, get the y value, if between 0 and GAME_HEIGHT, add it to the vectors of visible objects
-return the vector
-*/
+return the vector 
+*/ 
 
 /**
  * method that returns a vector of all the objects whos coordinates are visible in the game screen,
  * everyframe, we are still updating the obstacle's coordinates, only draw the ones on the screen tho
 */
-std::vector<CSimpleSprite*> Obstacles::getVisibleObjects() {
+std::vector<CSimpleSprite*> Obstacles::getVisibleObjects(){
     std::vector<CSimpleSprite*> visibleObjects;
     for (CSimpleSprite* rockSprite : rockSprites)
     {
@@ -479,6 +479,6 @@ std::vector<CSimpleSprite*> Obstacles::getVisibleObjects() {
     return visibleObjects;
 }
 /*
-method that deletes objects as soon as the leave the screen, since we cant go back
+method that deletes objects as soon as the leave the screen, since we cant go back 
 
 */
