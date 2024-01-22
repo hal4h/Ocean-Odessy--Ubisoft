@@ -164,8 +164,7 @@ std::vector<CSimpleSprite*> Map::getVisibleObstacles()
     return obstacles.getVisibleObjects();
 }
 
-// display meters left to finish
-
+// draw chest 
 void Map::drawChest()
 {
     chest->SetPosition(chest->GetWidth() / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
