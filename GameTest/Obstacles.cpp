@@ -477,7 +477,17 @@ std::vector<CSimpleSprite*> Obstacles::getVisibleObjects(){
 
     return visibleObjects;
 }
-/*
-method that deletes objects as soon as the leave the screen, since we cant go back 
 
-*/
+
+// once we have the vector of visible objects, we can iterate over it and delete the objects that are not on the screen anymore, or that reach the bottom of the screen, y value of 0.
+// we can also delete the objects that are in the vector, since we are not going to draw them anymore, and we want to save memory
+void Obstacles::deleteObjects(std::vector<CSimpleSprite*> visibleObjects){
+    for (CSimpleSprite* visibleObject : visibleObjects){
+        float x,y;
+        visibleObject->GetPosition(x,y);
+        if (y <= 0){
+            delete visibleObject;
+        }
+    }
+}
+
