@@ -23,7 +23,6 @@ public:
 
     void Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, CSimpleSprite* chest);
     void Draw(); // Added method to set depth
-    void SetAngle(float a);
     void SetScale(float s);
     void SetColor(float r, float g, float b);
     void GetPosition(float& x, float& y);

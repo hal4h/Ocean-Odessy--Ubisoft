@@ -21,9 +21,6 @@ public:
     void Update(float deltaTime);
     void Draw();
 
-    void ScrollUp(float deltatime);
-    void ScrollDown(float deltaTime);
-
     Obstacles obstacles = Obstacles();
 
     float GetYPos();
@@ -42,6 +39,8 @@ private:
     std::vector<std::vector<TileType>> tilemap;  // 2D vector to store tilemap data
 
     // float backgroundScale;
+   void ScrollUp(float deltatime);
+    void ScrollDown(float deltaTime);
 
      // Matrix to represent the tilemap
 

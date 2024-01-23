@@ -165,8 +165,7 @@ std::vector<CSimpleSprite*> Map::getVisibleObstacles()
     return obstacles.getVisibleObjects();
 }
 
-// display meters left to finish
-
+// draw chest 
 void Map::drawChest()
 {
     chest->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
@@ -184,6 +183,5 @@ void Map::drawMeter()
     float meters = max + mapYPosition;
 
     // print meters left
-    App::Print(10, 60, "Distance left to the treasure");
-    App::Print(10, 40, std::to_string(meters).c_str());
+    App::Print(10, 30, std::to_string(meters).c_str());
 }

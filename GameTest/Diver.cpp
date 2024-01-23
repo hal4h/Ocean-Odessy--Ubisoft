@@ -9,32 +9,26 @@ Diver::Diver() {
     // Set the initial position to the bottom of the page
     float initialX = APP_VIRTUAL_WIDTH / 2.0f;
     float initialY = APP_VIRTUAL_HEIGHT / 7.0f;
+    
+    diverSprite->SetPosition(initialX, initialY);
 
-   // MAX_HEALTH = 3;
-    health = MAX_HEALTH;
+     // MAX_HEALTH = 3;
+    health = MAX_HEALTH;     // initalize current health to max
 
     animSpeed = 1.0f / 6.0f; //let the default speed value (adjust as needed)
     swimSpeed = 1.0f;
     // Set the initial position to the top of the page
-    diverSprite->SetPosition(initialX, initialY);
 
     // Set the initial scale during initialization (adjust the value as needed)
     diverSprite->SetScale(1.0f);
 
     // Create animations during initialization
-    CreateAnimations(animSpeed);
 
     // Set the default animation (forwards)
     diverSprite->SetAnimation(ANIM_FORWARDS);
 
     isPlaying = true;
     isDead = false;
-
-
-
-    // create heart sprite
-    // heartSprite = new CSimpleSprite(".\\TestData\\heart.png", 1, 1);
-    // noHeartSprite = new CSimpleSprite(".\\TestData\\noheart.png", 1, 1);
 
     //vector of heartSprite, size of MAX_HEALTH
 
@@ -77,10 +71,6 @@ void Diver::SetPosition(float x, float y) {
     diverSprite->SetPosition(x, y);
     diverX = x;
     diverY = y;
-}
-
-void Diver::SetAngle(float a) {
-    diverSprite->SetAngle(a);
 }
 
 void Diver::SetScale(float s) {
@@ -156,8 +146,6 @@ void Diver::HandleInput(float deltaTime) {
 
 }
 
-
-
 void Diver::SetSpeed(float newSpeed) {
     swimSpeed= newSpeed;
 }
@@ -165,9 +153,6 @@ void Diver::SetSpeed(float newSpeed) {
 float Diver::GetSpeed() const {
     return swimSpeed;
 }
-
-
-
 
 void Diver::CheckScreenCollision() {
     float diverX, diverY;
@@ -199,8 +184,6 @@ void Diver::CheckScreenCollision() {
     }
 }
 
-
-
 void Diver::RepositionOnScreenCollision() {
     // Subtract one life (add your life management logic here)
     //TakeDamage();
@@ -224,8 +207,8 @@ bool Diver::IsDead() const {
 }
 
 
-// method to check if the diver intersects with an obstacle, returns true if it does
-// remember position of object is in the middle of the object, so you need to adjust the position of the diver to the left and right by half the width of the object
+// method to check if the diver intersects with an obstacle returns true if it does
+// remember position of the object is in the middle of the object, so you need to adjust the position of the diver to the left and right by half the width of the object
 bool Diver::Intersects(CSimpleSprite* obstacle){
     float x,y;
     diverSprite->GetPosition(x,y);
@@ -252,7 +235,7 @@ bool Diver::IsColliding(std::vector<CSimpleSprite*> obstacles) {
 
     for (int i = 0; i < obstacles.size(); i++) {
         if (Intersects(obstacles[i])) {
-            //TODO: if health gainer. not enemy
+            //TODO: if health booster. not enemy
             RepositionOnScreenCollision();
             obstacles.erase(obstacles.begin() + i);
             return true;
@@ -263,7 +246,6 @@ bool Diver::IsColliding(std::vector<CSimpleSprite*> obstacles) {
 
 // method to check if diver collides with the chest object, if it does game won
 bool Diver::GameWon(CSimpleSprite* chest) {
-
     if (Intersects(chest)) {
         return true;
     }
