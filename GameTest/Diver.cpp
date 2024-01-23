@@ -14,7 +14,7 @@ Diver::Diver() {
     health = MAX_HEALTH;
 
     animSpeed = 1.0f / 6.0f; //let the default speed value (adjust as needed)
-    swimSpeed = 0.85f;
+    swimSpeed = 1.0f;
     // Set the initial position to the top of the page
     diverSprite->SetPosition(initialX, initialY);
 
@@ -37,11 +37,13 @@ Diver::Diver() {
     // noHeartSprite = new CSimpleSprite(".\\TestData\\noheart.png", 1, 1);
 
     //vector of heartSprite, size of MAX_HEALTH
-    InitHealthVector();
+
 }
 
 Diver::~Diver() {
     delete diverSprite;
+    isPlaying = false;
+    isDead = true;
 }
 
 void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, CSimpleSprite* chest) {
@@ -51,17 +53,24 @@ void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, CSimp
     HandleInput(deltaTime); 
     CheckScreenCollision();
     IsColliding(obstacles);
-    GameWon(chest);
+    deleteObjects(obstacles);
+
+  //  GameWon(chest);
 
 }
 
 void Diver::Draw() {
-    // float x, y;
-    // diverSprite->GetPosition(x, y);
-    // diverSprite->SetPosition(x, y);
+     float x, y;
+     diverSprite->GetPosition(x, y);
+     diverSprite->SetPosition(x, y - 0.8f);
 
     diverSprite->Draw();
     DrawHearts();
+    char buffer[50];  // Adjust the size according to your needs
+    sprintf(buffer, "the current health is : %d", health);
+    App::Print(350, 200, buffer);
+
+
 }
 
 void Diver::SetPosition(float x, float y) {
@@ -99,9 +108,8 @@ void Diver::TakeDamage() {
     health--;
 
     // Call LoseHeart to update the visuals
-    LoseHeart();
 
-    if (health <= 0) {
+    if (health == 0) {
         isDead = true;
     }
 }
@@ -186,7 +194,7 @@ void Diver::CheckScreenCollision() {
         diverSprite->SetPosition(diverX, APP_VIRTUAL_HEIGHT - diverWidth / 2.0f);
     }
     // Check for collision with the bottom of the screen, loses a life
-    if (diverY + diverWidth / 2.0f <= 0) {
+    if (diverY - diverWidth / 2.0f <= 0) {
         RepositionOnScreenCollision();
     }
 }
@@ -195,16 +203,13 @@ void Diver::CheckScreenCollision() {
 
 void Diver::RepositionOnScreenCollision() {
     // Subtract one life (add your life management logic here)
-    TakeDamage();
-
-    if (isDead == false) {
-        //gameOver = true;
-    }
-    else {
-        float middleX = (APP_VIRTUAL_WIDTH - diverSprite->GetWidth()) / 2.0f;
-        float middleY = (APP_VIRTUAL_HEIGHT - diverSprite->GetHeight()) / 2.0f;
+    //TakeDamage();
+        float middleX = APP_VIRTUAL_WIDTH/ 2.0f;
+        float middleY = APP_VIRTUAL_HEIGHT / 8.0f;
         diverSprite->SetPosition(middleX, middleY);
-    }
+
+        health--;
+
     // Reposition the diver to the middle of the screen
 
 }
@@ -238,7 +243,7 @@ bool Diver::Intersects(CSimpleSprite* obstacle){
             return true;
         }
     }
-
+    return false;
 }
 
 // take vector as a parameter, and return true if the diver intersects with any of the obstacles in the vector
@@ -266,31 +271,25 @@ bool Diver::GameWon(CSimpleSprite* chest) {
 }
 
 
-
-// Initialize health vector
-void Diver::InitHealthVector() {
-    // Create a vector of size MAX_HEALTH
-    // TODO: create a vector of hearts, and set the position of the hearts using a for loop
-    for (int i = 0; i < MAX_HEALTH; i++) {
-        CSimpleSprite* heartSprite = new CSimpleSprite(".\\TestData\\heart.png", 1, 1);
-        heartSprite->SetPosition(i * heartSprite->GetWidth() + 5, 20);
-        hearts.push_back(heartSprite);
-    }
-}
-
-void Diver::LoseHeart() {
-    // Takes the array and changes the last heart sprite
-    if (!hearts.empty()) {
-        // Remove the last heart sprite
-        CSimpleSprite* lastHeart = hearts.back();
-        hearts.pop_back();
-        delete lastHeart; // Don't forget to free the memory
-    }
-}
-
 void Diver::DrawHearts() {
     // Draw the hearts
-    for (CSimpleSprite* heartSprite : hearts) {
-        heartSprite->Draw();
+    for (int i = 0; i < health; i++) {
+            CSimpleSprite* heartSprite = new CSimpleSprite(".\\TestData\\heart.png", 1, 1);
+            heartSprite->SetPosition(i * heartSprite->GetWidth() + 30, 20);
+            heartSprite->Draw();
+    
+    }
+}
+
+
+// once we have the vector of visible objects, we can iterate over it and delete the objects that are not on the screen anymore, or that reach the bottom of the screen, y value of 0.
+// we can also delete the objects that are in the vector, since we are not going to draw them anymore, and we want to save memory
+void Diver::deleteObjects(std::vector<CSimpleSprite*> visibleObjects) {
+    for (CSimpleSprite* visibleObject : visibleObjects) {
+        float x, y;
+        visibleObject->GetPosition(x, y);
+        if (y <= 0) {
+            delete visibleObject;
+        }
     }
 }

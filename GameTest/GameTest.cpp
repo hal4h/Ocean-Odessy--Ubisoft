@@ -41,18 +41,7 @@ void Init()
 	diver = new Diver();
 	gameMap = new Map(APP_VIRTUAL_WIDTH, APP_VIRTUAL_HEIGHT);
 	//------------------------------------------------------------------------
-	// const char* sound = ".\\TestData\\mletoff.wav";
-	// App::PlaySound(sound);
-	// App::StopSound(sound);
-
-	// App::PlaySound(sound);
-
-	// if (App::IsSoundPlaying(sound)) {
-	//	App::Print(10,10, "The sound is playing");
-	//	}
-	// else {
-	//	App::Print(300, 10, "No sound is playing");
-	//}
+	
 }
 
 //------------------------------------------------------------------------
@@ -73,8 +62,9 @@ void Update(float deltaTime)
 		// get chest 
 		CSimpleSprite* chest = gameMap->getChest();
 		diver->Update(deltaTime, obstacles, chest); // insert vector of obstacles here
+		
+		
 
-		//if (diver->)
 	}
 	else
 	{
@@ -90,19 +80,20 @@ void Render()
 {
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	// background->Draw();
-	// chest->Draw();
 
 	if (homescreen->IsGameStarted())
 	{
-		while (!diver->IsDead())
-		{
+		if (!diver->IsDead()) {
+
 			gameMap->Draw();
 			diver->Draw();
+
 		}
+		else {
+			App::Print(400, 400, "Player is dead, game over");
 
-		// call end game stuff
-
+		}
+			 
 	// Add other game elements render logic as needed
 	}
 	else
@@ -118,7 +109,6 @@ void Shutdown()
 {
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-	// delete cow;
 	delete diver;
 	delete gameMap;
 	delete homescreen;

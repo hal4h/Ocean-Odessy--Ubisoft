@@ -31,6 +31,7 @@ public:
 
     // get chest
     CSimpleSprite* getChest();
+     float max;
 
 private:
     //  float delta;

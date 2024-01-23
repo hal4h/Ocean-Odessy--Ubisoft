@@ -55,12 +55,19 @@ void Obstacles::DrawObstacles(float speed)
     {
         rockSprite->GetPosition(currentX, currentY);
         rockSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+
         rockSprite->Draw();
     }
+    int i = 1;
     for (CSimpleSprite* tireSprite : tireSprites)
     {
         tireSprite->GetPosition(currentX, currentY);
-        tireSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+       tireSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+       
+       //char buffer[50];  // Adjust the size according to your needs
+       //sprintf(buffer, " the current x %.2f and y %.2f coords", currentX, currentY - speed);
+       //App::Print(100 + i, 300+ i, buffer);
+       //i *500;
         tireSprite->Draw();
     }
     for (CSimpleSprite* bottle : bottleSprites)
@@ -69,45 +76,46 @@ void Obstacles::DrawObstacles(float speed)
         bottle->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
         bottle->Draw();
     }
+
     for (CSimpleSprite* cattailSprite : cattailSprites)
     {
         cattailSprite->GetPosition(currentX, currentY);
             cattailSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-            cattailSprite->Draw();
+        //    cattailSprite->Draw();
     }
-    for (CSimpleSprite* crabSprite : crabSprites) {
-        crabSprite->GetPosition(currentX, currentY);
-        crabSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-        crabSprite->Draw();
-    }
+    //for (CSimpleSprite* crabSprite : crabSprites) {
+    //    crabSprite->GetPosition(currentX, currentY);
+    //    crabSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+    //    crabSprite->Draw();
+    //}
 
-    for (CSimpleSprite* frogSprite : frogSprites)
-    {
-        frogSprite->GetPosition(currentX, currentY);
-        frogSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-        frogSprite->Draw();
-    }
+    //for (CSimpleSprite* frogSprite : frogSprites)
+    //{
+    //    frogSprite->GetPosition(currentX, currentY);
+    //    frogSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+    //    frogSprite->Draw();
+    //}
 
-    for (CSimpleSprite* pinkJellySprite : pinkJellySprites)
-    {
-        pinkJellySprite->GetPosition(currentX, currentY);
-        pinkJellySprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-        pinkJellySprite->Draw();
-    }
+    //for (CSimpleSprite* pinkJellySprite : pinkJellySprites)
+    //{
+    //    pinkJellySprite->GetPosition(currentX, currentY);
+    //    pinkJellySprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+    //    pinkJellySprite->Draw();
+    //}
 
-    for (CSimpleSprite* squidSprite : squidSprites)
-    {
-        squidSprite->GetPosition(currentX, currentY);
-        squidSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-        squidSprite->Draw();
-    }
+    //for (CSimpleSprite* squidSprite : squidSprites)
+    //{
+    //    squidSprite->GetPosition(currentX, currentY);
+    //    squidSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+    //    squidSprite->Draw();
+    //}
 
-       for (CSimpleSprite* fishSprite : fishSprites)
-    {
-        fishSprite->GetPosition(currentX, currentY);
-        fishSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-        fishSprite->Draw();
-    }
+    //   for (CSimpleSprite* fishSprite : fishSprites)
+    //{
+    //    fishSprite->GetPosition(currentX, currentY);
+    //    fishSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+    //    fishSprite->Draw();
+    //}
 }
 
 void Obstacles::initializeSprites()
@@ -119,7 +127,7 @@ void Obstacles::initializeSprites()
         rockSprites.push_back(rockSprite);
     }
 
-    //Initialize tire sprites
+    //Initialize tire spritesw
     for (int i = 0; i < TIRE_COUNT; ++i)
     {
         CSimpleSprite* tireSprite = initTire();
@@ -248,16 +256,17 @@ CSimpleSprite* Obstacles::initRock()
 }
 CSimpleSprite* Obstacles::initFish()
 {
-    CSimpleSprite *sprite = new CSimpleSprite(".\\TestData\\obstacles\\fish.png", 4, 1);
+    CSimpleSprite *sprite = new CSimpleSprite(".\\TestData\\fish.png", 4, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, {0, 1, 2, 3});
     sprite->SetAnimation(0);
     return sprite;
 }
 CSimpleSprite* Obstacles::initTire()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\tire.png", 2, 1);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\tire.png", 2, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1 });
     sprite->SetAnimation(0);
+    sprite->SetScale(1.4);
     return sprite;
 }
 //CSimpleSprite* Obstacles::initFish()
@@ -271,7 +280,7 @@ CSimpleSprite* Obstacles::initTire()
 
 CSimpleSprite* Obstacles::initYellowJelly()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\yellow-jelly.png", 4, 1);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\yellow-jelly.png", 4, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
     sprite->SetAnimation(0);
 
@@ -280,7 +289,7 @@ CSimpleSprite* Obstacles::initYellowJelly()
 
 CSimpleSprite* Obstacles::initFrog()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\frog.png", 4, 4);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\frog.png", 4, 4);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,- 13, 14, 15 });
     sprite->SetAnimation(0);
 
@@ -289,45 +298,45 @@ CSimpleSprite* Obstacles::initFrog()
 
 CSimpleSprite* Obstacles::initPinkJelly()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\pink-jelly.png", 2, 1);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\pink-jelly.png", 2, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1 });
     return sprite;
 }
 
 CSimpleSprite* Obstacles::initSquid()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\squid.png", 5, 1);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\squid.png", 5, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3,4 });
     return sprite;
 }
 
 CSimpleSprite* Obstacles::initTurtle()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\turtle.png", 4, 1);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\turtle.png", 4, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
     return sprite;
 }
 
 CSimpleSprite* Obstacles::initWatermelon()
 {
-    return new CSimpleSprite(".\\TestData\\obstacles\\watermelon.png", 1, 1);
+    return new CSimpleSprite(".\\TestData\\\watermelon.png", 1, 1);
 }
 
 CSimpleSprite* Obstacles::initCattail()
 {
-    return new CSimpleSprite(".\\TestData\\obstacles\\cattail.png", 1, 1);
+    return new CSimpleSprite(".\\TestData\\cattail.png", 1, 1);
 }
 
 CSimpleSprite* Obstacles::initCrab()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\crab.png", 6, 1);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\crab.png", 6, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3,4,5 });
     return sprite;
 }
 
 CSimpleSprite* Obstacles::initBottle()
 {
-    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\obstacles\\bottle.png", 4, 1);
+    CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\bottle.png", 4, 1);
     sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
     return sprite;
 
@@ -361,11 +370,11 @@ return the vector
  * method that returns a vector of all the objects whos coordinates are visible in the game screen,
  * everyframe, we are still updating the obstacle's coordinates, only draw the ones on the screen tho
 */
-std::vector<CSimpleSprite*> Obstacles::getVisibleObjects(){
+std::vector<CSimpleSprite*> Obstacles::getVisibleObjects() {
     std::vector<CSimpleSprite*> visibleObjects;
     for (CSimpleSprite* rockSprite : rockSprites)
     {
-        float y,x;
+        float y, x;
         rockSprite->GetPosition(x, y);
         if (y > 0 && y < APP_VIRTUAL_HEIGHT)
         {
@@ -384,15 +393,15 @@ std::vector<CSimpleSprite*> Obstacles::getVisibleObjects(){
         }
     }
 
-        for (CSimpleSprite* tireSprite : tireSprites) {
+    for (CSimpleSprite* tireSprite : tireSprites) {
 
-            float y, x;
-            tireSprite->GetPosition(x, y);
-            if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-            {
-                visibleObjects.push_back(tireSprite);
-            }
+        float y, x;
+        tireSprite->GetPosition(x, y);
+        if (y > 0 && y < APP_VIRTUAL_HEIGHT)
+        {
+            visibleObjects.push_back(tireSprite);
         }
+    }
 
     for (CSimpleSprite* fishSprite : fishSprites) {
         float y, x;
@@ -478,7 +487,3 @@ std::vector<CSimpleSprite*> Obstacles::getVisibleObjects(){
 
     return visibleObjects;
 }
-/*
-method that deletes objects as soon as the leave the screen, since we cant go back 
-
-*/

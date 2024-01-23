@@ -37,10 +37,13 @@ Map::Map(int windowWidth, int windowHeight)
     scrollSpeed = 1.0f / 9.0f; // Adjust as needed
 
     // obstacles.initializeSprites();
-    obstacles.initializeCoordinates(mapYPosition);
+     obstacles.initializeCoordinates(mapYPosition);
 
     // init chest
     chest = new CSimpleSprite(".\\TestData\\chest.png", 1, 1);
+
+    max = rows * waterSprite->GetHeight();
+
 }
 
 Map::~Map()
@@ -57,24 +60,7 @@ void Map::Update(float deltaTime)
     // waterSprite->SetColor(0.9 - depth /5, 0.9 -depth/5, 0.9 - depth / 5); // Light blue color
     obstacles.Update(deltaTime);
 
-    // if (App::GetController().GetLeftThumbStickY() > 0.5f) {
     ScrollDown(deltaTime);
-
-    // }
-    // else if (App::GetController().GetLeftThumbStickY() < -0.5f) {
-    //   ScrollUp(deltaTime);
-    // }
-    // depth = min(depth, 5.0f);
-    // Calculate new RGB values based on depth
-    //  float red = max(0.0f, 0.9f - depth / 5.0f);
-    //  float green = max(0.0f, 0.9f - depth / 5.0f);
-    // float blue = max(0.0f, 0.9f - depth / 5.0f);
-
-    // Set the new color for the water sprite
-    //  waterSprite->SetColor(red, green, blue);
-    // waterSprite->SetColor(0.678f, 0.8474f, 0.902f);
-
-    //  sandlayer->Update(deltaTime);
 }
 
 void Map::Draw()
@@ -183,7 +169,7 @@ std::vector<CSimpleSprite*> Map::getVisibleObstacles()
 
 void Map::drawChest()
 {
-    chest->SetPosition(chest->GetWidth() / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
+    chest->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
     chest->Draw();
 }
 
@@ -195,9 +181,9 @@ CSimpleSprite *Map::getChest()
 // display meters left until chest is reached
 void Map::drawMeter()
 {
-    const float max = rows * waterSprite->GetHeight();
-    float meters = max - mapYPosition;
+    float meters = max + mapYPosition;
 
     // print meters left
-    App::Print(10, 30, std::to_string(meters).c_str());
+    App::Print(10, 60, "Distance left to the treasure");
+    App::Print(10, 40, std::to_string(meters).c_str());
 }

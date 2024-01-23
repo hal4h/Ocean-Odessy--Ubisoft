@@ -35,8 +35,8 @@ public:
 
 
     const int ROCK_COUNT = 50;
-    const int TIRE_COUNT = 40;
-    const int FISH_COUNT = 30;
+    const int TIRE_COUNT = 30;
+    const int FISH_COUNT = 10;
     const int BOTTLE_COUNT = 30;
     const int CATTAIL_COUNT = 20;
     const int CRAB_COUNT = 2;
@@ -67,6 +67,8 @@ private:
     CSimpleSprite* initCattail();
     CSimpleSprite* initCrab();
     CSimpleSprite* initBottle();
+
+
 };
 
 #endif

@@ -3,7 +3,7 @@
 #ifndef DIVER_H
 #define DIVER_H
 
-#include "app/AppSettings.h";
+#include "app/AppSettings.h"
 #include "app/app.h"
 
 class Diver {
@@ -67,12 +67,10 @@ private:
     bool IsColliding(std::vector<CSimpleSprite*> obstacles);
 
     // vector of 3 hearts
-    std::vector<CSimpleSprite*> hearts;
-    void InitHealthVector();
     void DrawHearts();
-    void LoseHeart();
     bool GameWon(CSimpleSprite* chest);
 
+    void deleteObjects(std::vector<CSimpleSprite*> visibleObjects);
 
 };
 
