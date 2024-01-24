@@ -18,7 +18,7 @@ public:
     Map(int windowWidth, int windowHeight);
     ~Map();
 
-    void Update(float deltaTime);
+    void Update(float deltaTime, int speed);
     void Draw();
 
     Obstacles obstacles = Obstacles();
@@ -60,6 +60,8 @@ private:
     void drawChest();
     // draw meters
     void drawMeter();
+
+	float speeed; //
 
 };
 

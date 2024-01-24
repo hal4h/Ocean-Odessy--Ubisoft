@@ -10,12 +10,12 @@
 #include "app\AppSettings.h"
 
 // #include <algorithm>
+#include "GameState.h"
 #include "Diver.h"
 #include "Map.h"
-#include "Homescreen.h"
 #include "Obstacles.h"
 
-HomeScreen* homescreen;
+GameState* state;
 Diver* diver;
 Map* gameMap;
 
@@ -37,7 +37,7 @@ enum
 //------------------------------------------------------------------------
 void Init()
 {
-	homescreen = new HomeScreen();
+	state = new GameState();
 	diver = new Diver();
 	gameMap = new Map(APP_VIRTUAL_WIDTH, APP_VIRTUAL_HEIGHT);
 	//------------------------------------------------------------------------
@@ -50,26 +50,39 @@ void Init()
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
-
+	int speed = 2;
 	//------------------------------------------------------------------------
 	// Example Sprite Code...
 	// float depth = diver->GetDepth();
-	if (homescreen->IsGameStarted())
+
+	if (state->IsGameStarted()&& !state->IsGameOver())
 	{
-		gameMap->Update(deltaTime);
-		// get current obstacles
-		std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
-		// get chest 
-		CSimpleSprite* chest = gameMap->getChest();
-		diver->Update(deltaTime, obstacles, chest); // insert vector of obstacles here
-		
-		
+		if (state->IsGamePaused()) {
+			diver->IsPlaying(false);  // ensure user cant move sprite when game is paused
+			deltaTime = 0;	
+			speed = 0;
+			gameMap->Update(deltaTime, speed);
+			// get current obstacles
+			std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
+			// get chest 
+			CSimpleSprite* chest = gameMap->getChest();
+			diver->Update(deltaTime, obstacles, speed, chest); // insert vector of obstacles here
+
+			diver->IsPlaying(true);  // set back to true 
+		}
+		else {
+			gameMap->Update(deltaTime, speed);
+			// get current obstacles
+			std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
+			// get chest 
+			CSimpleSprite* chest = gameMap->getChest();
+			diver->Update(deltaTime, obstacles, speed/2.0f, chest); // insert vector of obstacles here
+		}
+			
 
 	}
-	else
-	{
-		homescreen->Update(deltaTime);
-	}
+	state->Update(deltaTime); 
+
 }
 
 //------------------------------------------------------------------------
@@ -80,26 +93,28 @@ void Render()
 {
 	//------------------------------------------------------------------------
 	// Example Sprite Code....
-
-	if (homescreen->IsGameStarted())
+	if (state->IsGameStarted())
 	{
-		if (!diver->IsDead()) {
+		if (diver->IsDead()) {
+			state->SetGameOver(true);
 
+			App::Print(400, 400, "Player is dead, game over");
+		}
+		else if (diver->IsWon()) {
+			state->SetGameWon(true);
+		}
+		else {
 			gameMap->Draw();
 			diver->Draw();
 
-		}
-		else {
-			App::Print(400, 400, "Player is dead, game over");
 
 		}
 			 
 	// Add other game elements render logic as needed
 	}
-	else
-	{
-		homescreen->Render();
-	}
+	
+	state->Render();
+
 }
 //------------------------------------------------------------------------
 // Add your shutdown code here. Called when the APP_QUIT_KEY is pressed.
@@ -111,8 +126,10 @@ void Shutdown()
 	// Example Sprite Code....
 	delete diver;
 	delete gameMap;
-	delete homescreen;
+	delete state;
 	// delete chest;
 	// delete background;
 	//------------------------------------------------------------------------
 }
+
+

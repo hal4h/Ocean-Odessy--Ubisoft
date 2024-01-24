@@ -21,7 +21,7 @@ public:
     Diver();
     ~Diver();
 
-    void Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, CSimpleSprite* chest);
+    void Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, int speed, CSimpleSprite* chest);
     void Draw(); // Added method to set depth
     void SetScale(float s);
     void SetColor(float r, float g, float b);
@@ -46,8 +46,13 @@ public:
     void SetSpeed(float speed);
     float GetSpeed() const;
 
-    bool IsPlaying() const; // New method
     bool IsDead() const;    // New method
+    void IsPlaying(bool value);
+
+    bool IsWon() const;
+
+    void setGameWon(bool value);
+
 
 private:
     CSimpleSprite* diverSprite;
@@ -59,9 +64,9 @@ private:
     float swimSpeed;
     void RepositionOnScreenCollision();
 
-    bool isPlaying;
-    bool isDead;
-
+     bool isDead;
+     bool isPlaying;
+     bool won;
     bool Intersects(CSimpleSprite* obstacle);
     bool IsColliding(std::vector<CSimpleSprite*> obstacles);
 
@@ -70,7 +75,8 @@ private:
     bool GameWon(CSimpleSprite* chest);
 
     void deleteObjects(std::vector<CSimpleSprite*> visibleObjects);
-
+        
+    int speeed;
 };
 
 #endif // DIVER_H

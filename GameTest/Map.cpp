@@ -20,10 +20,8 @@ Map::Map(int windowWidth, int windowHeight)
 
     sandlayer = new CSimpleSprite(".\\TestData\\newsand.png", 1, 1); // Adjust columns and rows
     sandlayer->SetPosition(sandlayer->GetWidth() / 2.0f, sandlayer->GetHeight() / 2.0f + mapYPosition);
-    sandlayer->SetAngle(3.14f);
 
     wateranim = new CSimpleSprite(".\\TestData\\waveanim.png", 17, 1); // Adjust columns and rows
-    wateranim->SetAngle(3.14f);
 
     rows = 322;
     cols = 24;
@@ -51,7 +49,7 @@ Map::~Map()
     delete waterSprite;
 }
 
-void Map::Update(float deltaTime)
+void Map::Update(float deltaTime, int speed)
 {
     // delta = deltaTime;
     // Update any animation or logic based on deltaTime
@@ -61,6 +59,7 @@ void Map::Update(float deltaTime)
     obstacles.Update(deltaTime);
 
     ScrollDown(deltaTime);
+    speeed = speed;
 }
 
 void Map::Draw()
@@ -86,7 +85,7 @@ void Map::Draw()
             waterSprite->Draw();
         }
     }
-    sandlayer->SetPosition(sandlayer->GetWidth() / 2.0f, sandlayer->GetHeight() / 2.0f + mapYPosition);
+    sandlayer->SetPosition(sandlayer->GetWidth() / 2.0f, rows * sandlayer->GetHeight() / 2.0f + mapYPosition);
     sandlayer->Draw();
 
     float start = wateranim->GetWidth() / 2.0f;
@@ -96,14 +95,13 @@ void Map::Draw()
     {
         float xPos = start + i * waterAnimWidth;
         wateranim->SetAnimation(ANIMATION_ID_WATER);
-        wateranim->SetPosition(xPos, sandlayer->GetHeight() + wateranim->GetHeight() / 2.0f + mapYPosition);
+        wateranim->SetPosition(xPos,rows* sandlayer->GetHeight() + wateranim->GetHeight() / 2.0f + mapYPosition);
         wateranim->Draw();
     }
-    obstacles.DrawObstacles(2);
-
+    obstacles.DrawObstacles(speeed);
+ 
     // Draw the chest
-    chest->SetPosition(chest->GetWidth() / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
-    chest->Draw();
+   
     drawMeter();
 
     drawChest();
@@ -168,7 +166,7 @@ std::vector<CSimpleSprite*> Map::getVisibleObstacles()
 // draw chest 
 void Map::drawChest()
 {
-    chest->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, chest->GetHeight() / 2.0f + mapYPosition);
+    chest->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, rows * waterSprite->GetHeight() / 2.0f + mapYPosition);
     chest->Draw();
 }
 

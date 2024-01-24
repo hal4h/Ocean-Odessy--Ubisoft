@@ -16,7 +16,7 @@ Diver::Diver() {
     health = MAX_HEALTH;     // initalize current health to max
 
     animSpeed = 1.0f / 6.0f; //let the default speed value (adjust as needed)
-    swimSpeed = 1.0f;
+    swimSpeed = 1.2f;
     // Set the initial position to the top of the page
 
     // Set the initial scale during initialization (adjust the value as needed)
@@ -25,13 +25,14 @@ Diver::Diver() {
     // Create animations during initialization
 
     // Set the default animation (forwards)
-    diverSprite->SetAnimation(ANIM_FORWARDS);
+    diverSprite->SetAnimation(ANIM_BACKWARDS);
+
+    CreateAnimations(animSpeed);
 
     isPlaying = true;
     isDead = false;
-
+    won = false;
     //vector of heartSprite, size of MAX_HEALTH
-
 }
 
 Diver::~Diver() {
@@ -40,7 +41,7 @@ Diver::~Diver() {
     isDead = true;
 }
 
-void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, CSimpleSprite* chest) {
+void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, int speed, CSimpleSprite* chest) {
     diverSprite->Update(deltaTime); // update diver animation
 
     // Handle player input for movement and animation
@@ -50,19 +51,19 @@ void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, CSimp
     deleteObjects(obstacles);
 
   //  GameWon(chest);
-
+    speeed = speed;
 }
 
 void Diver::Draw() {
      float x, y;
      diverSprite->GetPosition(x, y);
-     diverSprite->SetPosition(x, y - 0.8f);
+     diverSprite->SetPosition(x, y - speeed);
 
     diverSprite->Draw();
     DrawHearts();
-    char buffer[50];  // Adjust the size according to your needs
-    sprintf(buffer, "the current health is : %d", health);
-    App::Print(350, 200, buffer);
+    //char buffer[50];  // Adjust the size according to your needs
+    //sprintf(buffer, "the current health is : %d", health);
+    //App::Print(350, 200, buffer);
 
 
 }
@@ -97,8 +98,6 @@ int Diver::GetHealth() const {
 void Diver::TakeDamage() {
     health--;
 
-    // Call LoseHeart to update the visuals
-
     if (health == 0) {
         isDead = true;
     }
@@ -113,37 +112,40 @@ void Diver::CreateAnimations(float speed) {
 }
 
 void Diver::HandleInput(float deltaTime) {
-    // Handle player input for movement and animation
-    if (App::GetController().GetLeftThumbStickX() > 0.5f) {
-        diverSprite->SetAnimation(ANIM_RIGHT);
-        float x, y;
-        diverSprite->GetPosition(x, y);
-        x += swimSpeed;
-        diverSprite->SetPosition(x, y);
-    }
-    else if (App::GetController().GetLeftThumbStickX() < -0.5f) {
-        diverSprite->SetAnimation(ANIM_LEFT);
-        float x, y;
-        diverSprite->GetPosition(x, y);
-        x -= swimSpeed;
-        diverSprite->SetPosition(x, y);
-    }
-    else if (App::GetController().GetLeftThumbStickY() > 0.5f) {
-        diverSprite->SetAnimation(ANIM_FORWARDS);
-        float x, y;
-        diverSprite->GetPosition(x, y);
-        y += swimSpeed;
-        diverSprite->SetPosition(x, y);
-    }
-    else if (App::GetController().GetLeftThumbStickY() < -0.5f) {
-        diverSprite->SetAnimation(ANIM_BACKWARDS);
-        float x, y;
-        diverSprite->GetPosition(x, y);
-        y -= swimSpeed;
-        diverSprite->SetPosition(x, y);
 
-    }
+    if (isPlaying == true) {
 
+        // Handle player input for movement and animation
+        if (App::GetController().GetLeftThumbStickX() > 0.5f) {
+            diverSprite->SetAnimation(ANIM_RIGHT);
+            float x, y;
+            diverSprite->GetPosition(x, y);
+            x += swimSpeed;
+            diverSprite->SetPosition(x, y);
+        }
+         if (App::GetController().GetLeftThumbStickX() < -0.5f) {
+            diverSprite->SetAnimation(ANIM_LEFT);
+            float x, y;
+            diverSprite->GetPosition(x, y);
+            x -= swimSpeed;
+            diverSprite->SetPosition(x, y);
+        }
+         if (App::GetController().GetLeftThumbStickY() > 0.5f) {
+            diverSprite->SetAnimation(ANIM_FORWARDS);
+            float x, y;
+            diverSprite->GetPosition(x, y);
+            y += swimSpeed;
+            diverSprite->SetPosition(x, y);
+        }
+         if (App::GetController().GetLeftThumbStickY() < -0.5f) {
+            diverSprite->SetAnimation(ANIM_BACKWARDS);
+            float x, y;
+            diverSprite->GetPosition(x, y);
+            y -= swimSpeed;
+            diverSprite->SetPosition(x, y);
+
+        }
+    }
 }
 
 void Diver::SetSpeed(float newSpeed) {
@@ -198,14 +200,20 @@ void Diver::RepositionOnScreenCollision() {
 }
 
 
-bool Diver::IsPlaying() const {
-    return isPlaying;
+void Diver::IsPlaying(bool value)  {
+    isPlaying = value;
 }
 
 bool Diver::IsDead() const {
-    return isDead;
+    if (health > 0) {
+        return false;
+    }
+    return true;
 }
 
+void Diver::setGameWon(bool value) {
+	won = value;
+}
 
 // method to check if the diver intersects with an obstacle returns true if it does
 // remember position of the object is in the middle of the object, so you need to adjust the position of the diver to the left and right by half the width of the object
@@ -247,11 +255,14 @@ bool Diver::IsColliding(std::vector<CSimpleSprite*> obstacles) {
 // method to check if diver collides with the chest object, if it does game won
 bool Diver::GameWon(CSimpleSprite* chest) {
     if (Intersects(chest)) {
-        return true;
+        won= true;
     }
-    return false;
+    won= false;
 }
 
+bool Diver::IsWon() const {
+    return won;
+}
 
 void Diver::DrawHearts() {
     // Draw the hearts
