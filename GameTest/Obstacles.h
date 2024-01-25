@@ -11,64 +11,82 @@
 
 class Obstacles {
 public:
-    Obstacles();
-    ~Obstacles();
+	Obstacles();
+	~Obstacles();
 
-    void initializeSprites();
-    void initializeCoordinates(float userDepth);
+	void initializeSprites();
+	//void initializeCoordinates(float userDepth);
 
-    std::vector<CSimpleSprite*> getVisibleObjects();
+	//std::vector<CSimpleSprite*> getVisibleObjects();
 
-    std::vector<CSimpleSprite*> rockSprites;
-    std::vector<CSimpleSprite*> tireSprites;
-    std::vector<CSimpleSprite*> bottleSprites;
-    std::vector<CSimpleSprite*> cattailSprites;
-    std::vector<CSimpleSprite*> crabSprites;
-    std::vector<CSimpleSprite*> frogSprites;
-    std::vector<CSimpleSprite*> pinkJellySprites;
-    std::vector<CSimpleSprite*> squidSprites;
-    std::vector<CSimpleSprite*> turtleSprites;
-    std::vector<CSimpleSprite*> watermelonSprites;
-    std::vector<CSimpleSprite*> yellowJellySprites;
-    std::vector<CSimpleSprite*> fishSprites;
+	std::vector<CSimpleSprite*> visibleSprites;
 
 
+	const int ROCK_COUNT = 50;
+	const int TIRE_COUNT = 30;
+	const int FISH_COUNT = 10;
+	const int BOTTLE_COUNT = 30;
+	const int CATTAIL_COUNT = 20;
+	const int CRAB_COUNT = 2;
+	const int FROG_COUNT = 30;
+	const int PINK_JELLY_COUNT = 1;
+	const int SQUID_COUNT = 1;
+	const int TURTLE_COUNT = 1;
+	const int WATERMELON_COUNT = 1;
+	const int YELLOW_JELLY_COUNT = 1;
 
-    const int ROCK_COUNT = 50;
-    const int TIRE_COUNT = 30;
-    const int FISH_COUNT = 10;
-    const int BOTTLE_COUNT = 30;
-    const int CATTAIL_COUNT = 20;
-    const int CRAB_COUNT = 2;
-    const int FROG_COUNT = 1;
-    const int PINK_JELLY_COUNT = 1;
-    const int SQUID_COUNT = 1;
-    const int TURTLE_COUNT = 1;
-    const int WATERMELON_COUNT = 1;
-    const int YELLOW_JELLY_COUNT = 1;
+	void DrawObstacles(float yPos);
+	void Update(float deltaTime);
 
-    void DrawObstacles(float yPos);
-    void Update(float deltaTime);
+	const int MAX = 10304;
+	const int MAX_SPRITE = 10;
+	void moveObstacle(CSimpleSprite* sprite, float speed, std::vector<float> yValuesects);
 
-    const int MAX = 10304;
 private:
+	std::vector<float> generateY(int count, float yStart, float yEnd);
 
-    float generateRandomX(CSimpleSprite* sprite);
+	std::vector<float> rockY;
+	std::vector<float> tireY;
+	std::vector<float> fishY;
+	std::vector<float> bottleY;
+	std::vector<float> cattailY;
+	std::vector<float> crabY;
+	std::vector<float> frogY;
+	std::vector<float> pinkJellyY;
+	std::vector<float> squidY;
+	std::vector<float> turtleY;
+	std::vector<float> watermelonY;
+	std::vector<float> yellowJellyY;
 
-    CSimpleSprite* initRock();
-    CSimpleSprite* initTire();
-    CSimpleSprite* initFish();
-    CSimpleSprite* initYellowJelly();
-    CSimpleSprite* initFrog();
-    CSimpleSprite* initPinkJelly();
-    CSimpleSprite* initSquid();
-    CSimpleSprite* initTurtle();
-    CSimpleSprite* initWatermelon();
-    CSimpleSprite* initCattail();
-    CSimpleSprite* initCrab();
-    CSimpleSprite* initBottle();
+	std::vector<CSimpleSprite*> rockSprites;
+	std::vector<CSimpleSprite*> tireSprites;
+	std::vector<CSimpleSprite*> bottleSprites;
+	std::vector<CSimpleSprite*> cattailSprites;
+	std::vector<CSimpleSprite*> crabSprites;
+	std::vector<CSimpleSprite*> frogSprites;
+	std::vector<CSimpleSprite*> pinkJellySprites;
+	std::vector<CSimpleSprite*> squidSprites;
+	std::vector<CSimpleSprite*> turtleSprites;
+	std::vector<CSimpleSprite*> watermelonSprites;
+	std::vector<CSimpleSprite*> yellowJellySprites;
+	std::vector<CSimpleSprite*> fishSprites;
+	float generateRandomX(CSimpleSprite* sprite);
+
+	CSimpleSprite* initRock();
+	CSimpleSprite* initTire();
+	CSimpleSprite* initFish();
+	CSimpleSprite* initYellowJelly();
+	CSimpleSprite* initFrog();
+	CSimpleSprite* initPinkJelly();
+	CSimpleSprite* initSquid();
+	CSimpleSprite* initTurtle();
+	CSimpleSprite* initWatermelon();
+	CSimpleSprite* initCattail();
+	CSimpleSprite* initCrab();
+	CSimpleSprite* initBottle();
 
 
+	void initObstacle(CSimpleSprite* sprite, std::vector<float>& yValues);
 };
 
 #endif

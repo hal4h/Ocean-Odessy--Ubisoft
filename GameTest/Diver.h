@@ -74,7 +74,7 @@ private:
     void DrawHearts();
     bool GameWon(CSimpleSprite* chest);
 
-    void deleteObjects(std::vector<CSimpleSprite*> visibleObjects);
+   // void deleteObjects(std::vector<CSimpleSprite*> visibleObjects);
         
     int speeed;
 };

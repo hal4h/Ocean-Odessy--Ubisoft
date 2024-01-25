@@ -35,8 +35,8 @@ Map::Map(int windowWidth, int windowHeight)
     scrollSpeed = 1.0f / 9.0f; // Adjust as needed
 
     // obstacles.initializeSprites();
-     obstacles.initializeCoordinates(mapYPosition);
 
+    obstacle;
     // init chest
     chest = new CSimpleSprite(".\\TestData\\chest.png", 1, 1);
 
@@ -56,7 +56,7 @@ void Map::Update(float deltaTime, int speed)
     waterSprite->Update(deltaTime);
     wateranim->Update(deltaTime);
     // waterSprite->SetColor(0.9 - depth /5, 0.9 -depth/5, 0.9 - depth / 5); // Light blue color
-    obstacles.Update(deltaTime);
+    obstacle.Update(deltaTime);
 
     ScrollDown(deltaTime);
     speeed = speed;
@@ -98,7 +98,7 @@ void Map::Draw()
         wateranim->SetPosition(xPos,rows* sandlayer->GetHeight() + wateranim->GetHeight() / 2.0f + mapYPosition);
         wateranim->Draw();
     }
-    obstacles.DrawObstacles(speeed);
+    obstacle.DrawObstacles(speeed);
  
     // Draw the chest
    
@@ -160,7 +160,7 @@ float Map::GetYPos()
 // returns vectors of all visibile objects from calling objects method
 std::vector<CSimpleSprite*> Map::getVisibleObstacles()
 {
-    return obstacles.getVisibleObjects();
+    return obstacle.visibleSprites;
 }
 
 // draw chest 

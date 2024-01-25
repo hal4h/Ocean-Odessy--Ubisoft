@@ -21,8 +21,7 @@ public:
     void Update(float deltaTime, int speed);
     void Draw();
 
-    Obstacles obstacles = Obstacles();
-
+	Obstacles obstacle;
     float GetYPos();
     std::vector<CSimpleSprite*> getVisibleObstacles();
 
