@@ -32,54 +32,59 @@ void Init()
 	//------------------------------------------------------------------------
 	
 }
+
 //------------------------------------------------------------------------
 // Update your simulation here. deltaTime is the elapsed time since the last update in ms.
 // This will be called at no greater frequency than the value of APP_MAX_FRAME_RATE
 //------------------------------------------------------------------------
 void Update(float deltaTime)
 {
-    int speed = 2;
-    bool paused = false;
+	int speed = 2;
+	bool paused = false;
+	//------------------------------------------------------------------------
+	state->Update(deltaTime);
 
-    state->Update(deltaTime);
+	if (state->IsGameStarted() && !state->IsGameOver() && !state->IsGameWon())
+	{
+		if (state->IsGamePaused()) {
+			paused = true;
+			diver->IsPlaying(false);  // ensure user cant move sprite when game is paused
+			deltaTime = 0;
+			speed = 0;
+			gameMap->Update(deltaTime, speed, paused);
+			// get current obstacles
+			std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
+			// get chest 
+			CSimpleSprite* chest = gameMap->getChest();
+			diver->Update(deltaTime, obstacles, speed, chest); // insert vector of obstacles here
 
-    if (state->IsGameStarted() && !state->IsGameOver() && !state->IsGameWon())
-    {
-        if (state->IsGamePaused())
-        {
-            paused = true;
-            diver->IsPlaying(false);  // Ensure the user can't move the sprite when the game is paused
-            deltaTime = 0;
-            speed = 0;
-        }
+			diver->IsPlaying(true);  // set back to true 
 
-        // Get current obstacles and chest
-        std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
-        CSimpleSprite* chest = gameMap->getChest();
+			if (diver->IsWon()) {
+				state->SetGameWon(true);
+			}
+		}
+		else {
+			if (!gameMap->isScrolling()) {
+				speed = 0;
+			}
+			// get current obstacles
+			std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
+			// get chest 
+			CSimpleSprite* chest = gameMap->getChest();
+			gameMap->Update(deltaTime, speed, paused);
 
-        // Update game map and diver
-        gameMap->Update(deltaTime, speed, paused);
-        diver->Update(deltaTime, obstacles, paused ? 0 : speed / 2.0f, chest);
+			diver->Update(deltaTime, obstacles, speed / 2.0f, chest); // insert vector of obstacles here
+		}
+	}
+	else if (state->IsGameReset()) {
+		// reset state
+		//destroy
+		//safeDelete();
+		Init();
+	}
 
-        if (state->IsGameWon())
-        {
-            state->SetGameWon(true);
-        }
-
-        if (state->IsGamePaused())
-        {
-            diver->IsPlaying(true);  // Set back to true after updating
-        }
-    }
-    else if (state->IsGameReset())
-    {
-        // Reset state
-        // destroy
-        // safeDelete();
-        Init();
-    }
 }
-
 
 //------------------------------------------------------------------------
 // Add your display calls here (DrawLine,Print, DrawSprite.)
