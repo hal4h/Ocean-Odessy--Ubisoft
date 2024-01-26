@@ -28,7 +28,10 @@ public:
     // get chest
     CSimpleSprite* getChest();
      float max;
+     bool isScrolling() const;
 
+     bool scrolling;
+     float top = max;
 private:
     //  float delta;
     CSimpleSprite* wateranim;
@@ -38,7 +41,7 @@ private:
     std::vector<std::vector<TileType>> tilemap;  // 2D vector to store tilemap data
 
     // float backgroundScale;
-   void ScrollUp(float deltatime);
+  // void ScrollUp(float deltatime);
     void ScrollDown(float deltaTime);
 
      // Matrix to represent the tilemap
@@ -51,11 +54,11 @@ private:
 
     int rows; // Number of rows in the tilemap
     int cols; // Number of columns in the tilemap
-    void DrawFirstLayer();  // Helper method to draw the first layer of the map
-    void LoadTilemapFromFile(const char* filename);
+    //void LoadTilemapFromFile(const char* filename);
 
     // init chest
     // draw chest
+    void drawSand();
     void drawChest();
     // draw meters
     void drawMeter();

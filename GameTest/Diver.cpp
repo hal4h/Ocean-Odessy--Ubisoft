@@ -3,7 +3,7 @@
 
 #include "Diver.h"
 
-Diver::Diver() {
+Diver::Diver(){
     diverSprite = new CSimpleSprite(".\\TestData\\main_diver.png", 4, 4); // create sprite
 
     // Set the initial position to the bottom of the page
@@ -48,8 +48,14 @@ void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, int s
     HandleInput(deltaTime); 
     CheckScreenCollision();
     IsColliding(obstacles);
-
-  //  GameWon(chest);
+    if (cooldown) {  
+        cooldownDuration -= 1;
+        if (cooldownDuration <= 0) {
+            cooldown = false;
+            cooldownDuration = 3 * 60;  // Reset cooldown duration
+        }
+    }
+    GameWon(chest);
     speeed = speed;
 }
 
@@ -57,24 +63,17 @@ void Diver::Draw() {
      float x, y;
      diverSprite->GetPosition(x, y);
      diverSprite->SetPosition(x, y - speeed);
-
+     if (cooldown) {
+         // TODO: logic to flash 
+     }
     diverSprite->Draw();
     DrawHearts();
-    //char buffer[50];  // Adjust the size according to your needs
-    //sprintf(buffer, "the current health is : %d", health);
-    //App::Print(350, 200, buffer);
-
-
 }
 
 void Diver::SetPosition(float x, float y) {
     diverSprite->SetPosition(x, y);
     diverX = x;
     diverY = y;
-}
-
-void Diver::SetScale(float s) {
-    diverSprite->SetScale(s);
 }
 
 void Diver::SetColor(float r, float g, float b) {
@@ -227,23 +226,29 @@ bool Diver::Intersects(CSimpleSprite* obstacle){
     float obstacleWidth = obstacle->GetWidth();
     float obstacleHeight = obstacle->GetHeight();
 
-    // check if diver hits any side of obstacle
-    if(x+diverWidth/2 > obsX && x-diverWidth/2 < obsX+obstacleWidth){
-        if(y+diverHeight/2 > obsY && y-diverHeight/2 < obsY+obstacleHeight){
+    // Check if diver hits any side of obstacle with a 5-pixel leeway
+    if (x + diverWidth / 2 - 5 > obsX && x - diverWidth / 2 + 5 < obsX + obstacleWidth)
+    {
+        if (y + diverHeight / 2 - 5 > obsY && y - diverHeight / 2 + 5 < obsY + obstacleHeight)
+        {
             return true;
         }
     }
+
     return false;
 }
+
+// method to give immunity to sprite, flashes red
 
 // take vector as a parameter, and return true if the diver intersects with any of the obstacles in the vector
 // if intersects, break for loop, call take damage method, delete obstacle from vector, and return true
 bool Diver::IsColliding(std::vector<CSimpleSprite*> obstacles) {
 
     for (int i = 0; i < obstacles.size(); i++) {
-        if (Intersects(obstacles[i])) {
+        if (Intersects(obstacles[i]) && !cooldown) {
             //TODO: if health booster. not enemy
-            RepositionOnScreenCollision();
+            hitObject(obstacles[i]);
+            cooldown = true;  // Activate cooldown
             obstacles.erase(obstacles.begin() + i);
             return true;
         }
@@ -251,12 +256,19 @@ bool Diver::IsColliding(std::vector<CSimpleSprite*> obstacles) {
     return false;
 }
 
+void Diver::hitObject(CSimpleSprite* obstacle) {
+    TakeDamage();
+
+} 
+
 // method to check if diver collides with the chest object, if it does game won
 bool Diver::GameWon(CSimpleSprite* chest) {
     if (Intersects(chest)) {
         won= true;
     }
     won= false;
+
+    return won;
 }
 
 bool Diver::IsWon() const {

@@ -6,13 +6,18 @@
 Obstacles::Obstacles()
 {
 	rockY = generateY(ROCK_COUNT, 300, MAX);
-	tireY = generateY(TIRE_COUNT, 400, MAX);
-	frogY = generateY(FROG_COUNT, 600, MAX);
-	
+	tireY = generateY(TIRE_COUNT, 1050, MAX);
+	frogY = generateY(FROG_COUNT, 1800, MAX);
+	fishY = generateY(FISH_COUNT, 2550, MAX);
+	bottleY = generateY(BOTTLE_COUNT, 3300, MAX);
+	cattailY = generateY(CATTAIL_COUNT, 4050, MAX);
+	floatieY = generateY(FLOATIE_COUNT, 4800, MAX);
+	// crabY = generateY(CRAB_COUNT, 1600, MAX);
+	duckY = generateY(DUCK_COUNT, 3000, MAX);
+	sharkY = generateY(SHARK, 6300, MAX);
+	/// turtleY = generateY(TURTLE_COUNT, 1800, MAX);
 
 	initializeSprites(); // create the sprites,
-	// initializeCoordinates(sandHeight, userDepth);
-	//
 	visibleSprites;
 }
 
@@ -38,42 +43,39 @@ Obstacles::~Obstacles()
 	{
 		delete cattailSprite;
 	}
-	for (CSimpleSprite* crabSprite : crabSprites)
-	{
-		delete crabSprite;
-	}
+	
+		delete crabSprites;
+
 	for (CSimpleSprite* frogSprite : frogSprites)
 	{
 		delete frogSprite;
 	}
-	for (CSimpleSprite* pinkJellySprite : pinkJellySprites)
+	for (CSimpleSprite* floatie : floatieSprites)
 	{
-		delete pinkJellySprite;
+		delete floatie;
 	}
-	for (CSimpleSprite* squidSprite : squidSprites)
-	{
-		delete squidSprite;
-	}
+
 	for (CSimpleSprite* turtleSprite : turtleSprites)
 	{
 		delete turtleSprite;
 	}
-	for (CSimpleSprite* watermelonSprite : watermelonSprites)
+	for (CSimpleSprite* duck : duckSprites)
 	{
-		delete watermelonSprite;
+		delete duck;
 	}
 
-	for (CSimpleSprite* yellowJellySprite : yellowJellySprites)
+	for (CSimpleSprite* shark : sharkSprites)
 	{
-		delete yellowJellySprite;
+		delete shark;
 	}
 
-	// add code to delete other sprites
+	// only one crab sprite
+	delete crabSprites;
 }
 
 void Obstacles::Update(float deltaTime)
 {
-	// Update the obstacles animation, only 
+	// Update the obstacles animation, only
 	for (CSimpleSprite* rockSprite : rockSprites)
 	{
 		rockSprite->Update(deltaTime);
@@ -94,94 +96,82 @@ void Obstacles::Update(float deltaTime)
 	{
 		fish->Update(deltaTime);
 	}
-	for (CSimpleSprite* cattail : cattailSprites)
+
+	for (CSimpleSprite* duck : duckSprites)
 	{
-		cattail->Update(deltaTime);
+		duck->Update(deltaTime);
 	}
-	for (CSimpleSprite* crab : crabSprites)
+
+	for (CSimpleSprite* shark : sharkSprites)
 	{
-		crab->Update(deltaTime);
+		shark->Update(deltaTime);
 	}
-	for (CSimpleSprite* pinkJelly : pinkJellySprites)
-	{
-		pinkJelly->Update(deltaTime);
-	}
+
+	//crabSprites->Update(deltaTime);
+
 }
 
-void Obstacles::DrawObstacles(float speed)
+void Obstacles::DrawObstacles(float speed, bool scrolling)
 {
 	// create vector of obj on screen-
 
 	float currentX, currentY;
 
-	// Draw the obstacles
+	/** draw and update all static objects*/
+	// rock sprites
 	for (CSimpleSprite* rockSprite : rockSprites)
 	{
 		moveObstacle(rockSprite, speed, rockY);
 	}
-	for (CSimpleSprite* tireSprite : tireSprites) {
+	// tire sprites
+	for (CSimpleSprite* tireSprite : tireSprites)
+	{
 		moveObstacle(tireSprite, speed, tireY);
 	}
-	for (CSimpleSprite* frog : frogSprites) {
+	// frog sprites
+	for (CSimpleSprite* frog : frogSprites)
+	{
 		moveObstacle(frog, speed, frogY);
 	}
-	// for (CSimpleSprite* tireSprite : tireSprites)
-	// {
-	// tireSprite->GetPosition(currentX, currentY);
-	// tireSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
+	// bottle sprites
+	for (CSimpleSprite* bottle : bottleSprites)
+	{
+		moveObstacle(bottle, speed, rockY);
+	}
+	// cattail sprites
+	for (CSimpleSprite* cattailSprite : cattailSprites)
+	{
+		moveObstacle(cattailSprite, speed, rockY);
+	}
 
-	// //char buffer[50]; // Adjust the size according to your needs
-	// //sprintf(buffer, " the current x %.2f and y %.2f coords", currentX, currentY - speed);
-	// //App::Print(100 + i, 300+ i, buffer);
-	// //i *500;
-	// tireSprite->Draw();
-	// }
-	// for (CSimpleSprite* bottle : bottleSprites)
-	// {
-	// bottle->GetPosition(currentX, currentY);
-	// bottle->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-	// bottle->Draw();
-	// }
 
-	// for (CSimpleSprite* cattailSprite : cattailSprites)
-	// {
-	// cattailSprite->GetPosition(currentX, currentY);
-	// cattailSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-	// // cattailSprite->Draw();
-	// }
-	// for (CSimpleSprite* crabSprite : crabSprites) {
-	// crabSprite->GetPosition(currentX, currentY);
-	// crabSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-	// crabSprite->Draw();
-	//}
+	for (CSimpleSprite* floatie : floatieSprites)
+	{
+		moveObstacle(floatie, speed, rockY);
+	}
 
-	// for (CSimpleSprite* frogSprite : frogSprites)
-	//{
-	// frogSprite->GetPosition(currentX, currentY);
-	// frogSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-	// frogSprite->Draw();
-	// }
+	/** draw and update all dynamic objects*/
 
-	// for (CSimpleSprite* pinkJellySprite : pinkJellySprites)
-	//{
-	// pinkJellySprite->GetPosition(currentX, currentY);
-	// pinkJellySprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-	// pinkJellySprite->Draw();
-	// }
+	//moveCrab(crabSprites, speed, MAX);
 
-	// for (CSimpleSprite* squidSprite : squidSprites)
-	//{
-	// squidSprite->GetPosition(currentX, currentY);
-	// squidSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-	// squidSprite->Draw();
-	// }
+	int xSpeed = 0;
+	if (scrolling) {
+		xSpeed = 2; // is screen is scrolling let the objects move right and left 
+	}
+	for (CSimpleSprite* shark : sharkSprites)
+	{
+		dynamicShark(shark, speed, sharkY, xSpeed);
+	}
+	for (CSimpleSprite* duck : duckSprites)
+	{
+		dynamicShark(duck, speed, duckY, xSpeed);
+	}
+	// fish sprite
+	for (CSimpleSprite* fishSprite : fishSprites)
+	{
+		dynamicShark(fishSprite, speed, rockY, xSpeed);
+	}
 
-	// for (CSimpleSprite* fishSprite : fishSprites)
-	//{
-	// fishSprite->GetPosition(currentX, currentY);
-	// fishSprite->SetPosition(currentX, currentY - speed); // Add yPos to the current Y position, Set the updated position
-	// fishSprite->Draw();
-	//}
 }
 
 void Obstacles::initializeSprites()
@@ -196,7 +186,8 @@ void Obstacles::initializeSprites()
 	}
 
 	// init tire
-	for (int i = 0; i < MAX_SPRITE; ++i) {
+	for (int i = 0; i < MAX_SPRITE; ++i)
+	{
 		CSimpleSprite* tireSprite = initTire();
 		initObstacle(tireSprite, tireY);
 		tireSprites.push_back(tireSprite);
@@ -209,91 +200,52 @@ void Obstacles::initializeSprites()
 		initObstacle(frogSprite, frogY);
 		frogSprites.push_back(frogSprite);
 	}
-	// //Initialize tire spritesw
-	// for (int i = 0; i < TIRE_COUNT; ++i)
-	// {
-	// CSimpleSprite* tireSprite = initTire();
-	// tireSprites.push_back(tireSprite);
-	// }
 
-	// for (int i = 0; i < FISH_COUNT; i++)
-	// {
-	// CSimpleSprite* fishSprite = initFish();
-	// fishSprites.push_back(fishSprite);
-	// }
+	for (int i = 0; i < MAX_SPRITE; ++i)
+	{
+		CSimpleSprite* fishSprite = initFish();
+		initObstacle(fishSprite, fishY);
+		fishSprites.push_back(fishSprite);
+	}
 
 	// // Initialize bottle sprites
-	// for (int i = 0; i < BOTTLE_COUNT; ++i)
-	// {
-	// CSimpleSprite* branchSprite = initBottle();
-	// bottleSprites.push_back(branchSprite);
-	// }
+	for (int i = 0; i < MAX_SPRITE; ++i)
+	{
+		CSimpleSprite* bottle = initBottle();
+		initObstacle(bottle, bottleY);
+		bottleSprites.push_back(bottle);
+	}
 
-	// // Initialize cattail sprites
-	// for (int i = 0; i < CATTAIL_COUNT; ++i)
-	// {
-	// CSimpleSprite* cattailSprite = initCattail();
-	// cattailSprites.push_back(cattailSprite);
-	// }
+	for (int i = 0; i < MAX_SPRITE; ++i)
+	{
+		CSimpleSprite* shark = initShark();
+		initObstacle(shark, sharkY);
+		sharkSprites.push_back(shark);
+	}
 
-	// // Initialize crab sprites
-	// for (int i = 0; i < CRAB_COUNT; ++i)
-	// {
-	// CSimpleSprite* crabSprite = initCrab();
-	// crabSprites.push_back(crabSprite);
-	// }
+	for (int i = 0; i < MAX_SPRITE; ++i)
+	{
+		CSimpleSprite* duck = initDuck();
+		initObstacle(duck, duckY);
+		duckSprites.push_back(duck);
+	}
+	for (int i = 0; i < MAX_SPRITE; ++i)
+	{
+		CSimpleSprite* floatie = initFloatie();
+		initObstacle(floatie, floatieY);
+		floatieSprites.push_back(floatie);
+	}
 
-	// // Initialize frog sprites
-	// for (int i = 0; i < FROG_COUNT; ++i)
-	// {
-	// CSimpleSprite* frogSprite = initFrog();
-	// frogSprites.push_back(frogSprite);
-	// }
+	for (int i = 0; i < MAX_SPRITE; ++i)
+	{
+		CSimpleSprite* cattail = initCattail();
+		initObstacle(cattail, cattailY);
+		cattailSprites.push_back(cattail);
+	}
 
-	// // Initialize pink jelly sprites
-	// for (int i = 0; i < PINK_JELLY_COUNT; ++i)
-	// {
-	// CSimpleSprite* pinkJellySprite = initPinkJelly();
-	// pinkJellySprites.push_back(pinkJellySprite);
-	// }
+	//only one crab sprite in game
+	CSimpleSprite* crab = initCrab();
 
-	// // Initialize squid sprites
-	// for (int i = 0; i < SQUID_COUNT; ++i)
-	// {
-	// CSimpleSprite* squidSprite = initSquid();
-	// squidSprites.push_back(squidSprite);
-	// }
-
-	// // Initialize tire sprites
-	// for (int i = 0; i < YELLOW_JELLY_COUNT; ++i)
-	// {
-	// CSimpleSprite* yellowJellySprite = initYellowJelly();
-	// yellowJellySprites.push_back(yellowJellySprite);
-	// }
-
-	// // Initialize turtle sprites
-	// for (int i = 0; i < TURTLE_COUNT; ++i)
-	// {
-	// CSimpleSprite* turtleSprite = initTurtle();
-	// turtleSprites.push_back(turtleSprite);
-	// }
-
-	// // Initialize watermelon sprites
-	// for (int i = 0; i < WATERMELON_COUNT; ++i)
-	// {
-	// CSimpleSprite* watermelonSprite = initWatermelon();
-	// watermelonSprites.push_back(watermelonSprite);
-	// }
-
-	// // Initialize yellow jelly sprites
-	// for (int i = 0; i < BOTTLE_COUNT; ++i)
-	// {
-	// CSimpleSprite* bottle = initBottle();
-	// bottleSprites.push_back(bottle);
-	// }
-
-	// initialize coordinates at the end
-	// initializeCoordinates(sandHeight, userDepth);
 }
 
 // TODO: add class to handle the different types of obstacles
@@ -307,8 +259,9 @@ CSimpleSprite* Obstacles::initRock()
 CSimpleSprite* Obstacles::initFish()
 {
 	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\fish.png", 4, 1);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
+	sprite->CreateAnimation(0, 1.0f / 4.0f, { 0, 1, 2, 3 });
 	sprite->SetAnimation(0);
+	sprite->SetScale(1.8f);
 	return sprite;
 }
 CSimpleSprite* Obstacles::initTire()
@@ -320,60 +273,66 @@ CSimpleSprite* Obstacles::initTire()
 	return sprite;
 }
 
-CSimpleSprite* Obstacles::initYellowJelly()
+CSimpleSprite* Obstacles::initShark()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\yellow-jelly.png", 4, 1);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
+	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\shark.png", 5, 2);
+	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5, 6 });
 	sprite->SetAnimation(0);
-
+	sprite->SetScale(2.0);
 	return sprite;
 }
 
 CSimpleSprite* Obstacles::initFrog()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\frog.png", 4, 4);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, -13, 14, 15 });
+	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\frog.png", 2, 5);
+	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 	sprite->SetAnimation(0);
-	sprite->SetScale(3.0f);
+	sprite->SetScale(1.5f);
 
 	return sprite;
 }
 
-CSimpleSprite* Obstacles::initPinkJelly()
+CSimpleSprite* Obstacles::initFloatie()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\pink-jelly.png", 2, 1);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1 });
+	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\float.png", 1, 1);
+	sprite->SetScale(2.5f);
 	return sprite;
 }
 
-CSimpleSprite* Obstacles::initSquid()
+CSimpleSprite* Obstacles::initDuck()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\squid.png", 5, 1);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4 });
+	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\ducks.png", 3, 2);
+	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2 });
+	sprite->CreateAnimation(1, 1.0f / 6.0f, { 3, 4, 5 });
+	sprite->SetScale(1.5f);
+	sprite->SetAnimation(0);
 	return sprite;
 }
 
-CSimpleSprite* Obstacles::initTurtle()
-{
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\turtle.png", 4, 1);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
-	return sprite;
-}
+//CSimpleSprite* Obstacles::initTurtle()
+//{
+//	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\turtle.png", 4, 1);
+//	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
+//	return sprite;
+//}
 
-CSimpleSprite* Obstacles::initWatermelon()
-{
-	return new CSimpleSprite(".\\TestData\\\watermelon.png", 1, 1);
-}
+//CSimpleSprite* Obstacles::initWatermelon()
+//{
+//	return new CSimpleSprite(".\\TestData\\watermelon.png", 1, 1);
+//}
 
 CSimpleSprite* Obstacles::initCattail()
 {
-	return new CSimpleSprite(".\\TestData\\cattail.png", 1, 1);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\cattail.png", 1, 1);
+	sprite->SetScale(1.6f);
+	return sprite;
 }
 
 CSimpleSprite* Obstacles::initCrab()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\crab.png", 6, 1);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5 });
+	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\crab.png", 1, 2);
+	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1 });
+	sprite->SetPosition(0, MAX);
 	return sprite;
 }
 
@@ -384,6 +343,9 @@ CSimpleSprite* Obstacles::initBottle()
 	return sprite;
 }
 
+/*
+
+*/
 float Obstacles::generateRandomX(CSimpleSprite* sprite)
 {
 	float spriteWidth = sprite->GetWidth();
@@ -398,150 +360,13 @@ float Obstacles::generateRandomX(CSimpleSprite* sprite)
 	return randomX;
 }
 
-/*
-create a method that returns a vectors of all the objects whos coordinates are visible in the game screen,
-meaning coordinates are between GAME_WIDTH and GAME_HEIGHT
-iterate over the vectors of all objects in the .h file, get the y value, if between 0 and GAME_HEIGHT, add it to the vectors of visible objects
-return the vector
-*/
-
-/**
-* method that returns a vector of all the objects whos coordinates are visible in the game screen,
-* everyframe, we are still updating the obstacle's coordinates, only draw the ones on the screen tho
-//*/
-//std::vector<CSimpleSprite*> Obstacles::getVisibleObjects()
-//{
-//	for (CSimpleSprite* rockSprite : rockSprites)
-//	{
-//		float y, x;
-//		rockSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(rockSprite);
-//		}
-//	}
-//
-//	// for bottle sprite
-//	for (CSimpleSprite* bottleSprite : bottleSprites)
-//	{
-//		float y, x;
-//		bottleSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(bottleSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* tireSprite : tireSprites)
-//	{
-//
-//		float y, x;
-//		tireSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(tireSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* fishSprite : fishSprites)
-//	{
-//		float y, x;
-//		fishSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(fishSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* yellowJellySprite : yellowJellySprites)
-//	{
-//		float y, x;
-//		yellowJellySprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(yellowJellySprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* frogSprite : frogSprites)
-//	{
-//
-//		float y, x;
-//		frogSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(frogSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* pinkJellySprite : pinkJellySprites)
-//	{
-//		float y, x;
-//		pinkJellySprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(pinkJellySprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* squidSprite : squidSprites)
-//	{
-//		float y, x;
-//		squidSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(squidSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* turtleSprite : turtleSprites)
-//	{
-//		float y, x;
-//		turtleSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(turtleSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* watermelonSprite : watermelonSprites)
-//	{
-//		float y, x;
-//		watermelonSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(watermelonSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* cattailSprite : cattailSprites)
-//	{
-//		float y, x;
-//		cattailSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(cattailSprite);
-//		}
-//	}
-//
-//	for (CSimpleSprite* crabSprite : crabSprites)
-//	{
-//		float y, x;
-//		crabSprite->GetPosition(x, y);
-//		if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//		{
-//			visibleObjects.push_back(crabSprite);
-//		}
-//	}
-//
-//	return visibleObjects;
-//}
-
+// generates a vector of floats, with count number of values, starting at yStart and ending at yEnd
 std::vector<float> Obstacles::generateY(int count, float yStart, float yEnd)
 {
 	std::vector<float> yValues;
 	// Ensure count is at least 1 to avoid division by zero
-	if (count < 1) {
+	if (count < 1)
+	{
 		return yValues;
 	}
 
@@ -569,7 +394,6 @@ void Obstacles::initObstacle(CSimpleSprite* sprite, std::vector<float>& yValues)
 	// handle the case where yValues is empty
 }
 
-
 // takes pointer to a sprite, and speed, udpates its position, by adding speed to its current Y
 // if its Y is in page, call Draw(), and add to visible obsticles,
 // if Y is less than 0 and Y values is not empty, replace that
@@ -577,23 +401,144 @@ void Obstacles::moveObstacle(CSimpleSprite* sprite, float speed, std::vector<flo
 {
 	float y, x;
 	sprite->GetPosition(x, y);
+	//
 	sprite->SetPosition(x, y - speed);
 
-
-	if (y < 0) //below scrren
+	if (y < 0) // below scrren
 	{
 		if (yValues.size() > 0)
 		{
-			//
-			initObstacle(sprite, yValues);
+				initObstacle(sprite, yValues);
 		}
 		// else
 		// {
 		// delete sprite; // no sprites left and it is out of bounds
 		// }
 	}
-	else if (y > 0 && y < APP_VIRTUAL_HEIGHT){
-			visibleSprites.push_back(sprite);
+	else if (y > 0 && y < APP_VIRTUAL_HEIGHT)
+	{
+		visibleSprites.push_back(sprite);
 		sprite->Draw();
 	}
 }
+
+// crab, duck shark all dynamic
+// void Obstacles::moveCrab(CSimpleSprite *sprite, float speed, std::vector<float> yValues, float xSpeed)
+// {
+// floatx, y;
+// sprite->GetPosition(x, y);
+// // dynamic obstacle, crab moves back and forth on the screen, one it hits left side of the screen, slip angle to other side
+// // everyframe object will move at a speed of xSpeed
+// // if hits x of 0 or screen width, reverse direction and reverse angle
+// if (x < 0 || x > APP_VIRTUAL_WIDTH)
+// {
+// sprite->SetAngle(180);
+// xSpeed = -xSpeed;
+// }
+// else
+// {
+// sprite->SetAngle(0);
+// }
+// sprite->SetPosition(x + xSpeed, y - speed);
+// if (y < 0) // below scrren
+// {
+// if (yValues.size() > 0)
+// {
+// initObstacle(sprite, yValues);
+// }
+// }
+// else if (y > 0 && y < APP_VIRTUAL_HEIGHT)
+// {
+// visibleSprites.push_back(sprite);
+// sprite->Draw();
+// }
+// }
+
+
+// method that has crab moves back and forth on the screen, one it hits left side of the screen it moves other side
+//y is updated by subtracting speed, x is updated by adding xSpeed
+void Obstacles::moveCrab(CSimpleSprite* sprite, float speed, float xSpeed) {
+	float x, y;
+	sprite->GetPosition(x, y);
+	// dynamic obstacle, crab moves back and forth on the screen, one it hits left side of the screen, slip angle to other side
+	// everyframe object will move at a speed of xSpeed
+	//if (x <= 0 || x >=  APP_VIRTUAL_WIDTH)
+	//{
+	//	xSpeed = -xSpeed;
+	//}
+	//// set y position to the maximium of 500 and y - speed
+	//y = max(500, y - speed);
+	//sprite->SetPosition(x + xSpeed, y - speed);
+	//if (y > 0 && y < APP_VIRTUAL_HEIGHT)
+	//{
+	//	sprite->Draw();
+	//}
+}
+
+void Obstacles::dynamicShark(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed)
+{
+	float x, y;
+	sprite->GetPosition(x, y);
+
+	// Dynamic obstacle, shark moves back and forth on the screen.
+	// Once it hits the right side of the screen, it respawns at the left (x of 0).
+	// Every frame, the object will move at a speed of xSpeed.
+
+	if (x <= 0 - sprite->GetWidth() / 2.0f || x >= APP_VIRTUAL_WIDTH)
+	{
+		x = (x <= 0 - sprite->GetWidth() / 2.0f) ? APP_VIRTUAL_WIDTH : 0 - sprite->GetWidth() / 2.0f;
+	}
+
+	sprite->SetPosition(x + xSpeed, y - speed);
+
+	if (y < 0) // below scrren
+	{
+		if (yValues.size() > 0)
+		{
+			initObstacle(sprite, yValues);
+		}
+	}
+	else if (y > 0 && y < APP_VIRTUAL_HEIGHT)
+	{
+		visibleSprites.push_back(sprite);
+		sprite->Draw();
+	}
+}
+
+
+// dynamic obstacle, duck moves back and forth on the screen
+// start by moving by increasing X value until it hits wdith of screen, set animation to 0
+// when it hits the screen flip the other way so it subtracts X speed while setting animation to 1
+// if it hits the screen again, flip it back to 0,
+// everycall change Y value by -speed 
+//void Obstacles::dynamicDuck(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed)
+//{
+//	float x, y;
+//	sprite->GetPosition(x, y);
+//
+//	if (x - (sprite->GetWidth() /2.0f)  == 0){
+//		sprite->SetAnimation(1);
+//	}
+//	else if (x + (sprite->GetWidth() / 2.0f) == APP_VIRTUAL_WIDTH)
+//	{
+//		sprite->SetAnimation(0);
+//		xSpeed = -xSpeed;
+//
+//	}
+//
+//	sprite->SetPosition(x + xSpeed, y - speed);
+//	//float x, y;
+//
+//	if (y < 0) // below scrren
+//	{
+//		if (yValues.size() > 0)
+//		{
+//			initObstacle(sprite, yValues);
+//		}
+//	}
+//	else if (y > 0 && y < APP_VIRTUAL_HEIGHT)
+//	{
+//		visibleSprites.push_back(sprite);
+//		sprite->Draw();
+//	}
+//}

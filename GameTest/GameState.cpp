@@ -6,6 +6,9 @@
 GameState::GameState()
 {
 	gameStartSprite = new CSimpleSprite(".\\TestData\\game-menu.png", 1, 1);
+	gameStartSprite->CreateAnimation(0, 1.0f / 6.0f, { 0,1,2,3,4,5,6,7,8 });
+	gameStartSprite->SetAnimation(0);
+
 	pausedSprite = new CSimpleSprite(".\\TestData\\paused.png", 1, 1);
 	gameOverSprite = new CSimpleSprite(".\\TestData\\game-over.png", 1, 1);
 	gameWonSprite = new CSimpleSprite(".\\TestData\\game-won.png", 1, 1);
@@ -29,12 +32,14 @@ GameState::~GameState()
 
 void GameState::Update(float deltaTime)
 {
+		gameStartSprite->Update(deltaTime);
 	// check if game isnt started, space top start
 	// p to pause game 
 	// Implement game state updates here
 	// For example, check if the game is over, display appropriate screens, etc.
 	if (!gameStarted && App::GetController().CheckButton(XINPUT_GAMEPAD_START, true)) {
 		gameStarted = true; // Start game if user hits space
+		gameReset = false;
 	}
 	
 	//if game started and p is pressed, set game paused
@@ -47,7 +52,8 @@ void GameState::Update(float deltaTime)
 	}
 
 	// if user wants to restart game, 
-	if ((gameOver || gameWon) && (App::IsKeyPressed('R'))) {
+	if ((App::IsKeyPressed('R'))) {
+		gameReset = true;
 		gameStarted = false;
 		gameOver = false;
 		gameWon = false;
@@ -119,11 +125,16 @@ bool GameState::IsGamePaused() const
 	return gamePaused;
 }
 
+bool GameState::IsGameReset() const{
+	return gameReset;
+}
+
 void GameState::DisplayGameMenu()
 {
 	// Implement logic to display the game menu
 	// For example, draw the game menu sprite
 	gameStartSprite->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+	gameStartSprite->SetScale(0.8);
 	gameStartSprite->Draw();
 }
 
@@ -139,15 +150,16 @@ void GameState::DisplayGameOver()
 {
 	// Implement logic to display the game over screen
 	gameOverSprite->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
-	pausedSprite->SetScale(0.6f);
+	gameOverSprite->SetScale(0.6f);
 	gameOverSprite->Draw();
 
 }
 
 void GameState::DisplayGameWon()
 {
-		gameWonSprite->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
-		gameWonSprite->Draw();
+	gameWonSprite->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+	gameWonSprite->SetScale(1.0f);
+	gameWonSprite->Draw();
 
 }
 

@@ -4,6 +4,7 @@
 #define DIVER_H
 
 #include "app/AppSettings.h"
+#include "Map.h"
 #include "app/app.h"
 
 class Diver {
@@ -23,7 +24,6 @@ public:
 
     void Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, int speed, CSimpleSprite* chest);
     void Draw(); // Added method to set depth
-    void SetScale(float s);
     void SetColor(float r, float g, float b);
     void GetPosition(float& x, float& y);
     void CheckScreenCollision();
@@ -46,7 +46,7 @@ public:
     void SetSpeed(float speed);
     float GetSpeed() const;
 
-    bool IsDead() const;    // New method
+    bool IsDead() const;    
     void IsPlaying(bool value);
 
     bool IsWon() const;
@@ -75,8 +75,16 @@ private:
     bool GameWon(CSimpleSprite* chest);
 
    // void deleteObjects(std::vector<CSimpleSprite*> visibleObjects);
-        
+    void hitObject(CSimpleSprite* obstacle);
+
     int speeed;
+
+    const int IMMUNITY_DURATION = 3;  // seconds
+    const int FLASH_DURATION = 3;     // seconds
+    const int FRAME_RATE = 60;        // frames per second
+
+    bool cooldown = false;  // Add a cooldown flag
+    int cooldownDuration = 3 * 60;  // 3 seconds cooldown (assuming 60 frames per second)
 };
 
 #endif // DIVER_H

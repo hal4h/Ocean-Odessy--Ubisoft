@@ -38,7 +38,7 @@ enum
 void Init()
 {
 	state = new GameState();
-	diver = new Diver();
+	diver = new Diver() ;
 	gameMap = new Map(APP_VIRTUAL_WIDTH, APP_VIRTUAL_HEIGHT);
 	//------------------------------------------------------------------------
 	
@@ -54,6 +54,9 @@ void Update(float deltaTime)
 	//------------------------------------------------------------------------
 	// Example Sprite Code...
 	// float depth = diver->GetDepth();
+	//state->Update(deltaTime);
+
+	state->Update(deltaTime);
 
 	if (state->IsGameStarted()&& !state->IsGameOver())
 	{
@@ -71,6 +74,9 @@ void Update(float deltaTime)
 			diver->IsPlaying(true);  // set back to true 
 		}
 		else {
+			if (!gameMap->isScrolling()) {
+				speed = 0;
+			}
 			gameMap->Update(deltaTime, speed);
 			// get current obstacles
 			std::vector<CSimpleSprite*> obstacles = gameMap->getVisibleObstacles();
@@ -81,7 +87,12 @@ void Update(float deltaTime)
 			
 
 	}
-	state->Update(deltaTime); 
+	else if (state->IsGameReset()) {
+		// reset state
+		//destroy
+		//safeDelete();
+		Init();
+	}
 
 }
 
@@ -97,13 +108,12 @@ void Render()
 	{
 		if (diver->IsDead()) {
 			state->SetGameOver(true);
-
-			App::Print(400, 400, "Player is dead, game over");
 		}
 		else if (diver->IsWon()) {
 			state->SetGameWon(true);
 		}
 		else {
+			
 			gameMap->Draw();
 			diver->Draw();
 
@@ -133,3 +143,8 @@ void Shutdown()
 }
 
 
+void safeDelete() {
+	delete diver;
+	delete gameMap;
+	delete state;
+}
