@@ -22,25 +22,24 @@ public:
 	std::vector<CSimpleSprite*> visibleSprites;
 
 
-	const int ROCK_COUNT = 20;
-	const int TIRE_COUNT = 20;
+	const int ROCK_COUNT = 50;
+	const int TIRE_COUNT = 25;
 	const int FISH_COUNT = 25;
 	const int BOTTLE_COUNT = 25;
 	const int CATTAIL_COUNT = 20;
 	const int FROG_COUNT = 30;
 	const int FLOATIE_COUNT = 20;
 
-	const int CRAB_COUNT = 1;
 	const int DUCK_COUNT = 30;
-	const int SHARK = 10;
+	const int SHARK = 15;
 
 	const int TURTLE_COUNT = 1;
 	const int WATERMELON_COUNT = 1;
 
-	void DrawObstacles(float speed, bool scrolling);
+	void DrawObstacles(float speed, bool scrolling, bool paused);
 	void Update(float deltaTime);
 
-	const int MAX = 10304- 2000 / 2;
+	const int MAX = 10304- 2000;
 	const int MAX_SPRITE = 7;
 	void moveObstacle(CSimpleSprite* sprite, float speed, std::vector<float> yValuesects);
 
@@ -53,13 +52,10 @@ private:
 	std::vector<float> fishY;
 	std::vector<float> bottleY;
 	std::vector<float> cattailY;
-	//std::vector<float> crabY;
 	std::vector<float> frogY;
 	std::vector<float> floatieY;
 
 	std::vector<float> duckY;
-	//std::vector<float> turtleY;
-	//std::vector<float> watermelonY;
 	std::vector<float> sharkY;
 
 	std::vector<CSimpleSprite*> rockSprites;
@@ -69,12 +65,9 @@ private:
 	std::vector<CSimpleSprite*> frogSprites;
 	std::vector<CSimpleSprite*> floatieSprites;
 	std::vector<CSimpleSprite*> duckSprites;
-	std::vector<CSimpleSprite*> turtleSprites;
-	std::vector<CSimpleSprite*> watermelonSprites;
 	std::vector<CSimpleSprite*> sharkSprites;
 	std::vector<CSimpleSprite*> fishSprites;
 
-	CSimpleSprite* crabSprites;
 
 	float generateRandomX(CSimpleSprite* sprite);
 
@@ -85,18 +78,13 @@ private:
 	CSimpleSprite* initShark();
 	CSimpleSprite* initDuck();
 	CSimpleSprite* initFloatie();
-	//CSimpleSprite* initTurtle();
-	//CSimpleSprite* initWatermelon();
+
 	CSimpleSprite* initCattail();
-	CSimpleSprite* initCrab();
 	CSimpleSprite* initBottle();
 
 
 	void initObstacle(CSimpleSprite* sprite, std::vector<float>& yValues);
-
-	void moveCrab(CSimpleSprite* sprite, float speed, float xSpeed);
-	void dynamicShark(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed);
-	void dynamicDuck(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed);
+	void dynamicObj(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed);
 
 
 };

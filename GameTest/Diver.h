@@ -11,80 +11,76 @@ class Diver {
 public:
 
 
-    enum
-    {
-        ANIM_FORWARDS,
-        ANIM_BACKWARDS,
-        ANIM_LEFT,
-        ANIM_RIGHT,
-    };
+	enum
+	{
+		ANIM_FORWARDS,
+		ANIM_BACKWARDS,
+		ANIM_LEFT,
+		ANIM_RIGHT,
+	};
 
-    Diver();
-    ~Diver();
+	Diver();
+	~Diver();
 
-    void Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, int speed, CSimpleSprite* chest);
-    void Draw(); // Added method to set depth
-    void SetColor(float r, float g, float b);
-    void GetPosition(float& x, float& y);
-    void CheckScreenCollision();
+	void Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, int speed, CSimpleSprite* chest);
+	void Draw(); // Added method to set depth
+	void SetColor(float r, float g, float b);
+	void GetPosition(float& x, float& y);
 
-    //  void Diver::SetDepth(float d) {
+	//  void Diver::SetDepth(float d) {
 
-    void SetPosition(float x, float y);
+	void SetPosition(float x, float y);
 
 
-    // Health-related methods
-    void SetHealth(int health);
-    int GetHealth() const;
-    void TakeDamage();
 
-    // Animation-related methods
-    void CreateAnimations(float speed);
-    void HandleInput(float deltaTime);
+	// Speed-related methods
+	void SetSpeed(float speed);
+	float GetSpeed() const;
 
-    // Speed-related methods
-    void SetSpeed(float speed);
-    float GetSpeed() const;
+	bool IsDead() const;
+	void IsPlaying(bool value);
 
-    bool IsDead() const;    
-    void IsPlaying(bool value);
+	bool IsWon() const;
 
-    bool IsWon() const;
+	void setGameWon(bool value);
 
-    void setGameWon(bool value);
-
+	bool GameWon(CSimpleSprite* chest);
 
 private:
-    CSimpleSprite* diverSprite;
-    float diverX, diverY;
-    float depth; // Added depth variable
-    const int MAX_HEALTH = 3;
-    int health;
-    float animSpeed; // Speed variable
-    float swimSpeed;
-    void RepositionOnScreenCollision();
+	CSimpleSprite* chest;
+	CSimpleSprite* diverSprite;
+	float diverX, diverY;
+	float depth; // Added depth variable
+	const int MAX_HEALTH = 3;
+	int health;
+	float animSpeed; // Speed variable
+	float swimSpeed;
+	void RepositionOnScreenCollision();
 
-     bool isDead;
-     bool isPlaying;
-     bool won;
-    bool Intersects(CSimpleSprite* obstacle);
-    bool IsColliding(std::vector<CSimpleSprite*> obstacles);
+	bool isDead;
+	bool isPlaying;
+	bool won;
+	bool Intersects(CSimpleSprite* obstacle);
+	bool IsColliding(std::vector<CSimpleSprite*> obstacles);
+	void CheckScreenCollision();
 
-    // vector of 3 hearts
-    void DrawHearts();
-    bool GameWon(CSimpleSprite* chest);
 
-   // void deleteObjects(std::vector<CSimpleSprite*> visibleObjects);
-    void hitObject(CSimpleSprite* obstacle);
+	// Health-related methods
+	void SetHealth(int health);
+	int GetHealth() const;
+	void TakeDamage();
 
-    int speeed;
+	// Animation-related methods
+	void CreateAnimations(float speed);
+	void HandleInput(float deltaTime);
+	// vector of 3 hearts
+	void DrawHearts();
 
-    const int IMMUNITY_DURATION = 3;  // seconds
-    const int FLASH_DURATION = 3;     // seconds
-    const int FRAME_RATE = 60;        // frames per second
 
-    bool cooldown = false;  // Add a cooldown flag
-    int cooldownDuration = 3 * 60;  // 3 seconds cooldown (assuming 60 frames per second)
+	int speeed;
+
+	bool cooldown = false;  // Add a cooldown flag
+	int cooldownDuration = 3 * 60;  // 3 seconds cooldown (assuming 60 frames per second)
 };
 
 #endif // DIVER_H

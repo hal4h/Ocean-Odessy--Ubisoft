@@ -1,17 +1,16 @@
 #include "stdafx.h"
 #include "app\app.h"
 
-#include "GameState.h" // Include the header file for GameState if not already included
+#include "GameState.h" // Include the header file for GameState
 
 GameState::GameState()
 {
-	gameStartSprite = new CSimpleSprite(".\\TestData\\game-menu.png", 1, 1);
+	gameStartSprite = new CSimpleSprite(".\\Assests\\game-menu.png", 9, 1);
 	gameStartSprite->CreateAnimation(0, 1.0f / 6.0f, { 0,1,2,3,4,5,6,7,8 });
-	gameStartSprite->SetAnimation(0);
 
-	pausedSprite = new CSimpleSprite(".\\TestData\\paused.png", 1, 1);
-	gameOverSprite = new CSimpleSprite(".\\TestData\\game-over.png", 1, 1);
-	gameWonSprite = new CSimpleSprite(".\\TestData\\game-won.png", 1, 1);
+	pausedSprite = new CSimpleSprite(".\\Assests\\paused.png", 1, 1);
+	gameOverSprite = new CSimpleSprite(".\\Assests\\game-over.png", 1, 1);
+	gameWonSprite = new CSimpleSprite(".\\Assests\\game-won.png", 1, 1);
 
 	// Initialize other member variables
 	gameStarted = false;
@@ -32,23 +31,20 @@ GameState::~GameState()
 
 void GameState::Update(float deltaTime)
 {
-		gameStartSprite->Update(deltaTime);
-	// check if game isnt started, space top start
-	// p to pause game 
-	// Implement game state updates here
-	// For example, check if the game is over, display appropriate screens, etc.
+	gameStartSprite->Update(deltaTime);
+	// check if game isnt started, space to start
 	if (!gameStarted && App::GetController().CheckButton(XINPUT_GAMEPAD_START, true)) {
 		gameStarted = true; // Start game if user hits space
 		gameReset = false;
 	}
-	
-	//if game started and p is pressed, set game paused
+
+	//if game started and sapce is pressed, set game paused
 	if (gameStarted && !gamePaused && !gameWon && !gameOver && App::GetController().CheckButton(XINPUT_GAMEPAD_A, true)) {
 		gamePaused = true;
 
 	}
 	else if (gameStarted && gamePaused && !gameWon && !gameOver && App::GetController().CheckButton(XINPUT_GAMEPAD_A, true)) {
-		gamePaused = false; 	// if game is started, paused, and p is pressed, set paused to false
+		gamePaused = false; 	// if game is started, paused, and pause is pressed, set paused to false
 	}
 
 	// if user wants to restart game, 
@@ -125,7 +121,7 @@ bool GameState::IsGamePaused() const
 	return gamePaused;
 }
 
-bool GameState::IsGameReset() const{
+bool GameState::IsGameReset() const {
 	return gameReset;
 }
 
@@ -134,6 +130,7 @@ void GameState::DisplayGameMenu()
 	// Implement logic to display the game menu
 	// For example, draw the game menu sprite
 	gameStartSprite->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, APP_VIRTUAL_HEIGHT / 2.0f);
+	gameStartSprite->SetAnimation(0);
 	gameStartSprite->SetScale(0.8);
 	gameStartSprite->Draw();
 }

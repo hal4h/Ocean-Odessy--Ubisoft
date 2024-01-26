@@ -12,10 +12,8 @@ Obstacles::Obstacles()
 	bottleY = generateY(BOTTLE_COUNT, 3300, MAX);
 	cattailY = generateY(CATTAIL_COUNT, 4050, MAX);
 	floatieY = generateY(FLOATIE_COUNT, 4800, MAX);
-	// crabY = generateY(CRAB_COUNT, 1600, MAX);
 	duckY = generateY(DUCK_COUNT, 3000, MAX);
 	sharkY = generateY(SHARK, 6300, MAX);
-	/// turtleY = generateY(TURTLE_COUNT, 1800, MAX);
 
 	initializeSprites(); // create the sprites,
 	visibleSprites;
@@ -44,8 +42,6 @@ Obstacles::~Obstacles()
 		delete cattailSprite;
 	}
 	
-		delete crabSprites;
-
 	for (CSimpleSprite* frogSprite : frogSprites)
 	{
 		delete frogSprite;
@@ -55,10 +51,6 @@ Obstacles::~Obstacles()
 		delete floatie;
 	}
 
-	for (CSimpleSprite* turtleSprite : turtleSprites)
-	{
-		delete turtleSprite;
-	}
 	for (CSimpleSprite* duck : duckSprites)
 	{
 		delete duck;
@@ -70,7 +62,6 @@ Obstacles::~Obstacles()
 	}
 
 	// only one crab sprite
-	delete crabSprites;
 }
 
 void Obstacles::Update(float deltaTime)
@@ -111,7 +102,7 @@ void Obstacles::Update(float deltaTime)
 
 }
 
-void Obstacles::DrawObstacles(float speed, bool scrolling)
+void Obstacles::DrawObstacles(float speed, bool scrolling, bool paused)
 {
 	// create vector of obj on screen-
 
@@ -145,7 +136,6 @@ void Obstacles::DrawObstacles(float speed, bool scrolling)
 			moveObstacle(cattailSprite, speed, rockY);
 		}
 
-
 		for (CSimpleSprite* floatie : floatieSprites)
 		{
 			moveObstacle(floatie, speed, rockY);
@@ -153,24 +143,23 @@ void Obstacles::DrawObstacles(float speed, bool scrolling)
 
 		/** draw and update all dynamic objects*/
 
-		//moveCrab(crabSprites, speed, MAX);
 
-		int xSpeed = 0;
-		if (scrolling) {
-			xSpeed = 2; // is screen is scrolling let the objects move right and left 
+		int xSpeed = 2;
+		if (paused) {
+			xSpeed = 0; // is screen is scrolling let the objects move right and left 
 		}
 		for (CSimpleSprite* shark : sharkSprites)
 		{
-			dynamicShark(shark, speed, sharkY, xSpeed);
+			dynamicObj(shark, speed, sharkY, xSpeed);
 		}
 		for (CSimpleSprite* duck : duckSprites)
 		{
-			dynamicShark(duck, speed, duckY, xSpeed);
+			dynamicObj(duck, speed, duckY, xSpeed);
 		}
 		// fish sprite
 		for (CSimpleSprite* fishSprite : fishSprites)
 		{
-			dynamicShark(fishSprite, speed, rockY, xSpeed);
+			dynamicObj(fishSprite, speed, rockY, xSpeed);
 		}
 	}
 }
@@ -243,23 +232,18 @@ void Obstacles::initializeSprites()
 		initObstacle(cattail, cattailY);
 		cattailSprites.push_back(cattail);
 	}
-
-	//only one crab sprite in game
-	CSimpleSprite* crab = initCrab();
-
 }
 
-// TODO: add class to handle the different types of obstacles
 CSimpleSprite* Obstacles::initRock()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\rocks.png", 2, 3);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\rocks.png", 2, 3);
 	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5 });
 	sprite->SetAnimation(0);
 	return sprite;
 }
 CSimpleSprite* Obstacles::initFish()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\fish.png", 4, 1);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\fish.png", 4, 1);
 	sprite->CreateAnimation(0, 1.0f / 4.0f, { 0, 1, 2, 3 });
 	sprite->SetAnimation(0);
 	sprite->SetScale(1.8f);
@@ -267,7 +251,7 @@ CSimpleSprite* Obstacles::initFish()
 }
 CSimpleSprite* Obstacles::initTire()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\tire.png", 2, 1);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\tire.png", 2, 1);
 	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1 });
 	sprite->SetAnimation(0);
 	sprite->SetScale(1.8);
@@ -276,7 +260,7 @@ CSimpleSprite* Obstacles::initTire()
 
 CSimpleSprite* Obstacles::initShark()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\shark.png", 5, 2);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\shark.png", 5, 2);
 	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5, 6 });
 	sprite->SetAnimation(0);
 	sprite->SetScale(2.0);
@@ -285,7 +269,7 @@ CSimpleSprite* Obstacles::initShark()
 
 CSimpleSprite* Obstacles::initFrog()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\frog.png", 2, 5);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\frog.png", 2, 5);
 	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 });
 	sprite->SetAnimation(0);
 	sprite->SetScale(1.5f);
@@ -295,14 +279,14 @@ CSimpleSprite* Obstacles::initFrog()
 
 CSimpleSprite* Obstacles::initFloatie()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\float.png", 1, 1);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\float.png", 1, 1);
 	sprite->SetScale(2.5f);
 	return sprite;
 }
 
 CSimpleSprite* Obstacles::initDuck()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\ducks.png", 3, 2);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\ducks.png", 3, 2);
 	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2 });
 	sprite->CreateAnimation(1, 1.0f / 6.0f, { 3, 4, 5 });
 	sprite->SetScale(1.5f);
@@ -310,36 +294,17 @@ CSimpleSprite* Obstacles::initDuck()
 	return sprite;
 }
 
-//CSimpleSprite* Obstacles::initTurtle()
-//{
-//	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\turtle.png", 4, 1);
-//	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
-//	return sprite;
-//}
-
-//CSimpleSprite* Obstacles::initWatermelon()
-//{
-//	return new CSimpleSprite(".\\TestData\\watermelon.png", 1, 1);
-//}
 
 CSimpleSprite* Obstacles::initCattail()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\cattail.png", 1, 1);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\cattail.png", 1, 1);
 	sprite->SetScale(1.6f);
-	return sprite;
-}
-
-CSimpleSprite* Obstacles::initCrab()
-{
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\crab.png", 1, 2);
-	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1 });
-	sprite->SetPosition(0, MAX);
 	return sprite;
 }
 
 CSimpleSprite* Obstacles::initBottle()
 {
-	CSimpleSprite* sprite = new CSimpleSprite(".\\TestData\\bottle.png", 4, 1);
+	CSimpleSprite* sprite = new CSimpleSprite(".\\Assests\\bottle.png", 4, 1);
 	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2, 3 });
 	return sprite;
 }
@@ -423,60 +388,8 @@ void Obstacles::moveObstacle(CSimpleSprite* sprite, float speed, std::vector<flo
 	}
 }
 
-// crab, duck shark all dynamic
-// void Obstacles::moveCrab(CSimpleSprite *sprite, float speed, std::vector<float> yValues, float xSpeed)
-// {
-// floatx, y;
-// sprite->GetPosition(x, y);
-// // dynamic obstacle, crab moves back and forth on the screen, one it hits left side of the screen, slip angle to other side
-// // everyframe object will move at a speed of xSpeed
-// // if hits x of 0 or screen width, reverse direction and reverse angle
-// if (x < 0 || x > APP_VIRTUAL_WIDTH)
-// {
-// sprite->SetAngle(180);
-// xSpeed = -xSpeed;
-// }
-// else
-// {
-// sprite->SetAngle(0);
-// }
-// sprite->SetPosition(x + xSpeed, y - speed);
-// if (y < 0) // below scrren
-// {
-// if (yValues.size() > 0)
-// {
-// initObstacle(sprite, yValues);
-// }
-// }
-// else if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-// {
-// visibleSprites.push_back(sprite);
-// sprite->Draw();
-// }
-// }
-
-
-// method that has crab moves back and forth on the screen, one it hits left side of the screen it moves other side
-//y is updated by subtracting speed, x is updated by adding xSpeed
-void Obstacles::moveCrab(CSimpleSprite* sprite, float speed, float xSpeed) {
-	float x, y;
-	sprite->GetPosition(x, y);
-	// dynamic obstacle, crab moves back and forth on the screen, one it hits left side of the screen, slip angle to other side
-	// everyframe object will move at a speed of xSpeed
-	//if (x <= 0 || x >=  APP_VIRTUAL_WIDTH)
-	//{
-	//	xSpeed = -xSpeed;
-	//}
-	//// set y position to the maximium of 500 and y - speed
-	//y = max(500, y - speed);
-	//sprite->SetPosition(x + xSpeed, y - speed);
-	//if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-	//{
-	//	sprite->Draw();
-	//}
-}
-
-void Obstacles::dynamicShark(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed)
+ 
+void Obstacles::dynamicObj(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed)
 {
 	float x, y;
 	sprite->GetPosition(x, y);
@@ -505,41 +418,3 @@ void Obstacles::dynamicShark(CSimpleSprite* sprite, float speed, std::vector<flo
 		sprite->Draw();
 	}
 }
-
-
-// dynamic obstacle, duck moves back and forth on the screen
-// start by moving by increasing X value until it hits wdith of screen, set animation to 0
-// when it hits the screen flip the other way so it subtracts X speed while setting animation to 1
-// if it hits the screen again, flip it back to 0,
-// everycall change Y value by -speed 
-//void Obstacles::dynamicDuck(CSimpleSprite* sprite, float speed, std::vector<float> yValues, float xSpeed)
-//{
-//	float x, y;
-//	sprite->GetPosition(x, y);
-//
-//	if (x - (sprite->GetWidth() /2.0f)  == 0){
-//		sprite->SetAnimation(1);
-//	}
-//	else if (x + (sprite->GetWidth() / 2.0f) == APP_VIRTUAL_WIDTH)
-//	{
-//		sprite->SetAnimation(0);
-//		xSpeed = -xSpeed;
-//
-//	}
-//
-//	sprite->SetPosition(x + xSpeed, y - speed);
-//	//float x, y;
-//
-//	if (y < 0) // below scrren
-//	{
-//		if (yValues.size() > 0)
-//		{
-//			initObstacle(sprite, yValues);
-//		}
-//	}
-//	else if (y > 0 && y < APP_VIRTUAL_HEIGHT)
-//	{
-//		visibleSprites.push_back(sprite);
-//		sprite->Draw();
-//	}
-//}
