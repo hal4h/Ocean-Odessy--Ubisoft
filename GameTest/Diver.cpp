@@ -259,7 +259,7 @@ bool Diver::IsColliding(std::vector<CSimpleSprite*> obstacles) {
 void Diver::hitObject(CSimpleSprite* obstacle) {
     TakeDamage();
 
-    // logic for turning red/ flashing 
+    // logic for turning red/ flashing
 } 
 
 // method to check if diver collides with the chest object, if it does game won
