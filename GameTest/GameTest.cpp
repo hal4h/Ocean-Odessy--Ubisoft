@@ -58,7 +58,7 @@ void Update(float deltaTime)
 
 	state->Update(deltaTime);
 
-	if (state->IsGameStarted()&& !state->IsGameOver())
+	if (state->IsGameStarted()&& !state->IsGameOver() && !state->IsGameWon())
 	{
 		if (state->IsGamePaused()) {
 			diver->IsPlaying(false);  // ensure user cant move sprite when game is paused

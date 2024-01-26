@@ -55,7 +55,7 @@ void Diver::Update(float deltaTime, std::vector<CSimpleSprite*> obstacles, int s
             cooldownDuration = 3 * 60;  // Reset cooldown duration
         }
     }
-    GameWon(chest);
+   // GameWon(chest);
     speeed = speed;
 }
 
@@ -227,9 +227,9 @@ bool Diver::Intersects(CSimpleSprite* obstacle){
     float obstacleHeight = obstacle->GetHeight();
 
     // Check if diver hits any side of obstacle with a 5-pixel leeway
-    if (x + diverWidth / 2 - 5 > obsX && x - diverWidth / 2 + 5 < obsX + obstacleWidth)
+    if (x + diverWidth / 2  > obsX && x - diverWidth / 2 < obsX + obstacleWidth)
     {
-        if (y + diverHeight / 2 - 5 > obsY && y - diverHeight / 2 + 5 < obsY + obstacleHeight)
+        if (y + diverHeight / 2 > obsY && y - diverHeight / 2 < obsY + obstacleHeight)
         {
             return true;
         }
@@ -259,16 +259,15 @@ bool Diver::IsColliding(std::vector<CSimpleSprite*> obstacles) {
 void Diver::hitObject(CSimpleSprite* obstacle) {
     TakeDamage();
 
+    // logic for turning red/ flashing 
 } 
 
 // method to check if diver collides with the chest object, if it does game won
 bool Diver::GameWon(CSimpleSprite* chest) {
     if (Intersects(chest)) {
-        won= true;
+        return true;
     }
-    won= false;
-
-    return won;
+	return false;
 }
 
 bool Diver::IsWon() const {

@@ -61,7 +61,7 @@ void Map::Update(float deltaTime, int speed)
 
     top -= scrollSpeed * deltaTime;
 
-        ScrollDown(deltaTime*9);
+        ScrollDown(deltaTime);
   
     speeed = speed;
 }
@@ -96,14 +96,14 @@ void Map::Draw()
      //   speeed = 0;
    }
     drawSand();
-  //  obstacle.DrawObstacles(speeed,scrolling);
+   obstacle.DrawObstacles(speeed,scrolling);
     drawMeter();
     drawChest();
 }
 // draw chest 
 void Map::drawChest()
 {
-    chest->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, max + (3 * chest->GetHeight() / 2.0f) + mapYPosition);
+    chest->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, 10328 - (sandlayer->GetHeight() / 2.0f) + mapYPosition);
     chest->Draw();
 }
 
@@ -168,7 +168,7 @@ CSimpleSprite* Map::getChest()
 // display meters left until chest is reached
 void Map::drawMeter()
 {
-    float meters = max + mapYPosition;
+    float meters = 10319 - (sandlayer->GetHeight()) + mapYPosition;
     char* msg = "Meters left until chest is reached:";
     // print meters left
 

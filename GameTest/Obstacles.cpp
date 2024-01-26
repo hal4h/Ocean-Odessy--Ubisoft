@@ -119,59 +119,60 @@ void Obstacles::DrawObstacles(float speed, bool scrolling)
 
 	/** draw and update all static objects*/
 	// rock sprites
-	for (CSimpleSprite* rockSprite : rockSprites)
-	{
-		moveObstacle(rockSprite, speed, rockY);
-	}
-	// tire sprites
-	for (CSimpleSprite* tireSprite : tireSprites)
-	{
-		moveObstacle(tireSprite, speed, tireY);
-	}
-	// frog sprites
-	for (CSimpleSprite* frog : frogSprites)
-	{
-		moveObstacle(frog, speed, frogY);
-	}
-	// bottle sprites
-	for (CSimpleSprite* bottle : bottleSprites)
-	{
-		moveObstacle(bottle, speed, rockY);
-	}
-	// cattail sprites
-	for (CSimpleSprite* cattailSprite : cattailSprites)
-	{
-		moveObstacle(cattailSprite, speed, rockY);
-	}
-
-
-	for (CSimpleSprite* floatie : floatieSprites)
-	{
-		moveObstacle(floatie, speed, rockY);
-	}
-
-	/** draw and update all dynamic objects*/
-
-	//moveCrab(crabSprites, speed, MAX);
-
-	int xSpeed = 0;
 	if (scrolling) {
-		xSpeed = 2; // is screen is scrolling let the objects move right and left 
-	}
-	for (CSimpleSprite* shark : sharkSprites)
-	{
-		dynamicShark(shark, speed, sharkY, xSpeed);
-	}
-	for (CSimpleSprite* duck : duckSprites)
-	{
-		dynamicShark(duck, speed, duckY, xSpeed);
-	}
-	// fish sprite
-	for (CSimpleSprite* fishSprite : fishSprites)
-	{
-		dynamicShark(fishSprite, speed, rockY, xSpeed);
-	}
+		for (CSimpleSprite* rockSprite : rockSprites)
+		{
+			moveObstacle(rockSprite, speed, rockY);
+		}
+		// tire sprites
+		for (CSimpleSprite* tireSprite : tireSprites)
+		{
+			moveObstacle(tireSprite, speed, tireY);
+		}
+		// frog sprites
+		for (CSimpleSprite* frog : frogSprites)
+		{
+			moveObstacle(frog, speed, frogY);
+		}
+		// bottle sprites
+		for (CSimpleSprite* bottle : bottleSprites)
+		{
+			moveObstacle(bottle, speed, rockY);
+		}
+		// cattail sprites
+		for (CSimpleSprite* cattailSprite : cattailSprites)
+		{
+			moveObstacle(cattailSprite, speed, rockY);
+		}
 
+
+		for (CSimpleSprite* floatie : floatieSprites)
+		{
+			moveObstacle(floatie, speed, rockY);
+		}
+
+		/** draw and update all dynamic objects*/
+
+		//moveCrab(crabSprites, speed, MAX);
+
+		int xSpeed = 0;
+		if (scrolling) {
+			xSpeed = 2; // is screen is scrolling let the objects move right and left 
+		}
+		for (CSimpleSprite* shark : sharkSprites)
+		{
+			dynamicShark(shark, speed, sharkY, xSpeed);
+		}
+		for (CSimpleSprite* duck : duckSprites)
+		{
+			dynamicShark(duck, speed, duckY, xSpeed);
+		}
+		// fish sprite
+		for (CSimpleSprite* fishSprite : fishSprites)
+		{
+			dynamicShark(fishSprite, speed, rockY, xSpeed);
+		}
+	}
 }
 
 void Obstacles::initializeSprites()
