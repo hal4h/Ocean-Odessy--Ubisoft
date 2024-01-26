@@ -305,7 +305,7 @@ CSimpleSprite* Obstacles::initDuck()
 	sprite->CreateAnimation(0, 1.0f / 6.0f, { 0, 1, 2 });
 	sprite->CreateAnimation(1, 1.0f / 6.0f, { 3, 4, 5 });
 	sprite->SetScale(1.5f);
-	sprite->SetAnimation(0);
+	sprite->SetAnimation(1);
 	return sprite;
 }
 

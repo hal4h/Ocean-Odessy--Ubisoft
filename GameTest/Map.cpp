@@ -17,21 +17,21 @@ Map::Map(int windowWidth, int windowHeight)
 
     // Initialize the water sprite with an 8x2 animated sprite representing waves
     waterSprite = new CSimpleSprite(".\\TestData\\Ocean_SpriteSheet.png", 8, 2); // Adjust columns and rows
+    float animationSpeed = 1.0f / 6.0f; // Adjust as needed
+    waterSprite->CreateAnimation(ANIMATION_ID_WATER, animationSpeed, { 0, 1, 2 });
 
-    sandlayer = new CSimpleSprite(".\\TestData\\newsand.png", 1, 1); // Adjust columns and rows
-    sandlayer->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, 10328 - (sandlayer->GetHeight() / 2.0f) + mapYPosition);
+    sandlayer = new CSimpleSprite(".\\TestData\\new-sand.png", 1, 1); // Adjust columns and rows
+    sandlayer->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, max - APP_VIRTUAL_HEIGHT - (sandlayer->GetHeight() / 2.0f) + mapYPosition);
 
     wateranim = new CSimpleSprite(".\\TestData\\waveanim.png", 17, 1); // Adjust columns and rows
-
+    wateranim->CreateAnimation(ANIMATION_ID_WATER, animationSpeed, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16 });
+    wateranim->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, max - APP_VIRTUAL_HEIGHT - sandlayer->GetHeight() + mapYPosition);
     rows = 322;
     cols = 24;
 
     // Create animations for the water spr
-    float animationSpeed = 1.0f / 6.0f; // Adjust as needed
-    waterSprite->CreateAnimation(ANIMATION_ID_WATER, animationSpeed, { 0, 1, 2 });
-
+    
     float waterSpeed = 1.0f / 6.0f; // Adjust as needed
-    wateranim->CreateAnimation(ANIMATION_ID_WATER, animationSpeed, { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 14, 15, 16 });
     scrollSpeed = 1.0f / 9.0f; // Adjust as needed
 
     obstacle;
@@ -61,7 +61,7 @@ void Map::Update(float deltaTime, int speed)
 
     top -= scrollSpeed * deltaTime;
 
-        ScrollDown(deltaTime);
+        ScrollDown(deltaTime*9);
   
     speeed = speed;
 }
@@ -91,22 +91,12 @@ void Map::Draw()
         }
     }
 
-    float start = wateranim->GetWidth() / 2.0f;
-    float waterAnimWidth = wateranim->GetWidth();
-
-    for (int i = 0; i < cols; i++)
-    {
-        float xPos = start + i * waterAnimWidth;
-        wateranim->SetAnimation(ANIMATION_ID_WATER);
-        wateranim->SetPosition(xPos,rows* sandlayer->GetHeight() + wateranim->GetHeight() / 2.0f + mapYPosition);
-        wateranim->Draw();
-    }
 
     if (!scrolling) {
      //   speeed = 0;
    }
     drawSand();
-    obstacle.DrawObstacles(speeed,scrolling);
+  //  obstacle.DrawObstacles(speeed,scrolling);
     drawMeter();
     drawChest();
 }
@@ -118,6 +108,16 @@ void Map::drawChest()
 }
 
 void Map::drawSand() {
+    float start = wateranim->GetWidth() / 2.0f;
+    float waterAnimWidth = wateranim->GetWidth();
+
+    for (int i = 0; i < cols; i++)
+    {
+        float xPos = start + i * waterAnimWidth;
+        wateranim->SetAnimation(ANIMATION_ID_WATER);
+        wateranim->SetPosition(xPos, 10328 - (sandlayer->GetHeight()) + mapYPosition- wateranim->GetHeight() / 2.0f);
+        wateranim->Draw();
+    }
     sandlayer->SetPosition(APP_VIRTUAL_WIDTH / 2.0f, 10328 - (sandlayer->GetHeight() / 2.0f) + mapYPosition);
     sandlayer->Draw();
 }

@@ -40,7 +40,7 @@ public:
 	void DrawObstacles(float speed, bool scrolling);
 	void Update(float deltaTime);
 
-	const int MAX = 10304- 2000;
+	const int MAX = 10304- 2000 / 2;
 	const int MAX_SPRITE = 7;
 	void moveObstacle(CSimpleSprite* sprite, float speed, std::vector<float> yValuesects);
 
